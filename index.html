@@ -1,76 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Support — RefreshMate</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #1e293b; background: #f8fafc; line-height: 1.7;
-  }
-  .container { max-width: 600px; margin: 0 auto; padding: 40px 24px 80px; text-align: center; }
-  .icon { font-size: 64px; margin-bottom: 16px; }
-  h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; color: #3b82f6; }
-  p { font-size: 16px; color: #475569; margin-bottom: 20px; }
-  .features {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-    margin: 24px 0; text-align: left;
-  }
-  .feature {
-    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
-    padding: 16px; font-size: 14px; color: #334155;
-  }
-  .feature span { font-size: 20px; display: block; margin-bottom: 6px; }
-  .btn {
-    display: inline-block; padding: 14px 36px; background: #3b82f6;
-    color: #fff; border: none; border-radius: 12px; font-size: 16px;
-    font-weight: 700; cursor: pointer; text-decoration: none;
-    transition: all 0.2s;
-  }
-  .btn:hover { background: #2563eb; transform: translateY(-1px); }
-  .links { margin-top: 32px; font-size: 14px; }
-  .links a { color: #3b82f6; text-decoration: none; margin: 0 12px; }
-  .links a:hover { text-decoration: underline; }
-  footer { margin-top: 40px; font-size: 13px; color: #94a3b8; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RefreshMate - Auto Page Refresh & Keyword Monitor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      max-width: 820px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ── Header banner ── */
+    .banner {
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      padding: 36px 40px 32px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .banner-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      flex-shrink: 0;
+      backdrop-filter: blur(4px);
+    }
+    .banner-text h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .banner-text p {
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    /* ── Body two-column ── */
+    .body {
+      display: flex;
+      gap: 0;
+    }
+
+    .col {
+      flex: 1;
+      padding: 28px 36px;
+    }
+    .col-left {
+      border-right: 1px solid #eee;
+    }
+
+    .col h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #10b981;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .feature-list li {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #444;
+      padding-left: 22px;
+      position: relative;
+    }
+    .feature-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      opacity: 0.5;
+    }
+
+    .thank-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #555;
+    }
+    .thank-text p + p {
+      margin-top: 12px;
+    }
+    .thank-text .heart {
+      color: #e74c3c;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      text-align: center;
+      padding: 28px 36px 36px;
+      border-top: 1px solid #eee;
+    }
+    .cta p {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+    .cta .disclaimer {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .kofi-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      background: #10b981;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+    }
+    .kofi-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    .kofi-btn:active {
+      transform: translateY(0);
+    }
+    .kofi-btn .btn-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 16px 36px 20px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .footer a {
+      color: #10b981;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      body { padding: 12px; }
+      .banner { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .body { flex-direction: column; }
+      .col-left { border-right: none; border-bottom: 1px solid #eee; }
+      .col { padding: 24px 20px; }
+      .screenshot { padding: 20px 20px 0; }
+      .screenshot img { max-width: 220px; }
+      .cta { padding: 24px 20px 28px; }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div class="icon">🎯</div>
-  <h1>Support RefreshMate</h1>
-  <p>RefreshMate is open-source and privacy-first. If you find it helpful, here's how you can support the project:</p>
+  <div class="card">
+    <!-- Banner -->
+    <div class="banner">
+      <div class="banner-icon">🔄</div>
+      <div class="banner-text">
+        <h1>RefreshMate</h1>
+        <p data-i18n="tagline"></p>
+      </div>
+    </div>
 
-  <div class="features">
-    <div class="feature">
-      <span>⭐</span>
-      <strong>Rate & Review</strong><br>
-      Leave a 5-star review on the Chrome Web Store
+    <!-- Body: two columns -->
+    <div class="body">
+      <!-- Left: features -->
+      <div class="col col-left">
+        <h2 data-i18n="featuresTitle"></h2>
+        <ul class="feature-list" id="featureList"></ul>
+      </div>
+
+      <!-- Right: thank you -->
+      <div class="col">
+        <h2 data-i18n="thankTitle"></h2>
+        <div class="thank-text" id="thankText"></div>
+      </div>
     </div>
-    <div class="feature">
-      <span>🐛</span>
-      <strong>Report Bugs</strong><br>
-      Found an issue? Open an issue on Gitee
+
+    <!-- CTA -->
+    <div class="cta">
+      <p class="disclaimer" data-i18n="disclaimer"></p>
+      <p data-i18n="ctaHint"></p>
+      <a class="kofi-btn" href="https://ko-fi.com/annmax?buyACoffee=true&ref=refreshmate" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+          <line x1="6" y1="1" x2="6" y2="4"/>
+          <line x1="10" y1="1" x2="10" y2="4"/>
+          <line x1="14" y1="1" x2="14" y2="4"/>
+        </svg>
+        <span data-i18n="btnText"></span>
+      </a>
     </div>
-    <div class="feature">
-      <span>💬</span>
-      <strong>Share</strong><br>
-      Tell your friends and colleagues about RefreshMate
-    </div>
-    <div class="feature">
-      <span>🔧</span>
-      <strong>Contribute</strong><br>
-      Suggest features or submit pull requests
+
+    <!-- Footer -->
+    <div class="footer">
+      <a href="https://github.com/annmax1983/RefreshMate" target="_blank" rel="noopener">GitHub</a>
+      &nbsp;·&nbsp;
+      <a href="privacy-policy.html" target="_blank" rel="noopener" data-i18n="privacyPolicy">Privacy Policy</a>
+      &nbsp;·&nbsp; Copyright © 2026 RefreshMate
     </div>
   </div>
 
-  <div class="links">
-    <a href="https://github.com/annmax1983/RefreshMate">GitHub</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
-  </div>
+  <script>
+    // ============================================================
+    //  i18n — 6 languages
+    // ============================================================
+    const I18N = {
+      zh: {
+        tagline: '自动刷新页面 · 关键词监控 · 随机间隔 · 完全本地',
+        featuresTitle: '✨ 功能特色',
+        features: [
+          '自定义刷新间隔，5秒到数小时自由设置',
+          '随机刷新间隔，防止网站检测和封禁',
+          '关键词监控，页面出现/消失时自动提醒',
+          'CAPTCHA检测，遇到验证码自动暂停',
+          '浮动倒计时，实时显示下次刷新时间',
+          '输入框自动暂停，打字时不打扰你'
+        ],
+        thankTitle: '💌 想对你说',
+        thank: [
+          '感谢你使用 RefreshMate。这个小工具的诞生，只是因为我自己需要监控一些页面的变化。',
+          '如果它也帮到了你，那对我来说就是最好的回报。',
+          '如果你愿意请我喝一杯咖啡 <span class="heart">☕</span>，我会非常开心。'
+        ],
+        disclaimer: 'Ko-fi 仅为自愿赞助，不会影响任何功能使用，赞助与扩展功能无任何绑定，仅为用户自发支持。',
+        ctaHint: '点击下方按钮，跳转到 Ko-fi 支持页面',
+        btnText: '请我喝杯咖啡',
+        privacyPolicy: '隐私政策'
+      },
+      en: {
+        tagline: 'Auto refresh pages · Keyword monitoring · Random intervals · Fully local',
+        featuresTitle: '✨ Features',
+        features: [
+          'Custom refresh intervals from 5 seconds to hours',
+          'Random intervals to avoid detection and bans',
+          'Keyword alerts when text appears or disappears',
+          'CAPTCHA detection — auto-pauses on verification',
+          'Floating countdown overlay on the page',
+          'Auto-pause when typing in input fields'
+        ],
+        thankTitle: '💌 A Note to You',
+        thank: [
+          'Thank you for using RefreshMate. This little tool was born because I needed to monitor page changes.',
+          'If it helps you too, that\'s already the best reward I could ask for.',
+          'If you\'d like to <span class="heart">☕</span> buy me a coffee, I\'d really appreciate it.'
+        ],
+        disclaimer: 'Ko-fi sponsorship is purely voluntary and does not affect any features. Sponsorship has no binding to extension functionality — it is solely user-initiated support.',
+        ctaHint: 'Click the button below to visit the Ko-fi support page',
+        btnText: 'Buy Me a Coffee',
+        privacyPolicy: 'Privacy Policy'
+      },
+      ja: {
+        tagline: '自動ページ更新 · キーワード監視 · ランダム間隔 · 完全ローカル',
+        featuresTitle: '✨ 機能紹介',
+        features: [
+          '5秒から数時間のカスタム更新間隔',
+          '検出・ブロックを防ぐランダム間隔',
+          'テキストの出現/消失時にキーワードアラート',
+          'CAPTCHA検出 — 認証時に自動一時停止',
+          'ページ上のフローティングカウントダウン',
+          '入力フィールドでタイピング時に自動一時停止'
+        ],
+        thankTitle: '💌 ご利用ありがとうございます',
+        thank: [
+          'RefreshMateをご利用いただきありがとうございます。このツールは、ページの変更を監視する必要があるから生まれました。',
+          'もし皆様の役に立てているなら、それが何よりの喜びです。',
+          'もしよろしければ、コーヒーを <span class="heart">☕</span> 一杯おごっていただけると、とても嬉しいです。'
+        ],
+        disclaimer: 'Ko-fi は純粋な任意のサポートです。機能に一切影響せず、サポートと拡張機能は無関係です。ユーザーの自発的な支援のみです。',
+        ctaHint: '下のボタンをクリックすると Ko-fi サポートページに移動します',
+        btnText: 'Buy Me a Coffee',
+        privacyPolicy: 'プライバシーポリシー'
+      },
+      de: {
+        tagline: 'Seiten automatisch aktualisieren · Keyword-Überwachung · Zufallsintervalle · Vollständig lokal',
+        featuresTitle: '✨ Funktionen',
+        features: [
+          'Benutzerdefinierte Aktualisierungsintervalle von 5 Sekunden bis Stunden',
+          'Zufallsintervalle zur Vermeidung von Erkennung und Sperrung',
+          'Keyword-Alarme bei Text-Erscheinen oder Verschwinden',
+          'CAPTCHA-Erkennung — pausiert automatisch bei Verifizierung',
+          'Schwebender Countdown-Overlay auf der Seite',
+          'Automatische Pause bei Eingabe in Textfeldern'
+        ],
+        thankTitle: '💌 Ein paar Worte an Sie',
+        thank: [
+          'Vielen Dank, dass Sie RefreshMate nutzen. Dieses kleine Tool entstand, weil ich Seitenänderungen überwachen musste.',
+          'Wenn es auch Ihnen hilft, ist das die beste Belohnung.',
+          'Wenn Sie mir gerne einen <span class="heart">☕</span> Kaffee ausgeben möchten, würde mich das sehr freuen.'
+        ],
+        disclaimer: 'Ko-fi-Sponsoring ist rein freiwillig und beeinträchtigt keine Funktionen. Das Sponsoring hat keinen Einfluss auf die Erweiterungsfunktionen — es ist ausschließlich eine freiwillige Unterstützung durch die Nutzer.',
+        ctaHint: 'Klicken Sie auf die Schaltfläche unten, um zur Ko-fi-Support-Seite zu gelangen',
+        btnText: 'Buy Me a Coffee',
+        privacyPolicy: 'Datenschutzrichtlinie'
+      },
+      es: {
+        tagline: 'Actualiza páginas automáticamente · Monitoreo de palabras clave · Intervalos aleatorios · Totalmente local',
+        featuresTitle: '✨ Características',
+        features: [
+          'Intervalos de actualización personalizados de 5 segundos a horas',
+          'Intervalos aleatorios para evitar detección y bloqueos',
+          'Alertas de palabras clave cuando el texto aparece o desaparece',
+          'Detección de CAPTCHA — pausa automática en verificación',
+          'Contador regresivo flotante en la página',
+          'Pausa automática al escribir en campos de entrada'
+        ],
+        thankTitle: '💌 Unas palabras para ti',
+        thank: [
+          'Gracias por usar RefreshMate. Esta pequeña herramienta nació porque necesitaba monitorear cambios en páginas.',
+          'Si también te ayuda, esa ya es la mejor recompensa.',
+          'Si quieres invitarme a un <span class="heart">☕</span> café, me haría muy feliz.'
+        ],
+        disclaimer: 'El patrocinio en Ko-fi es puramente voluntario y no afecta ninguna funcionalidad. El patrocinio no tiene vinculación con las funciones de la extensión — es únicamente apoyo iniciado por el usuario.',
+        ctaHint: 'Haz clic en el botón de abajo para visitar la página de soporte de Ko-fi',
+        btnText: 'Buy Me a Coffee',
+        privacyPolicy: 'Política de Privacidad'
+      },
+      fr: {
+        tagline: 'Actualisation automatique · Surveillance de mots-clés · Intervalles aléatoires · Entièrement local',
+        featuresTitle: '✨ Fonctionnalités',
+        features: [
+          'Intervalles d\'actualisation personnalisés de 5 secondes à plusieurs heures',
+          'Intervalles aléatoires pour éviter la détection et les blocages',
+          'Alertes de mots-clés quand le texte apparaît ou disparaît',
+          'Détection CAPTCHA — mise en pause automatique lors de la vérification',
+          'Compte à rebours flottant sur la page',
+          'Mise en pause automatique lors de la saisie dans les champs'
+        ],
+        thankTitle: '💌 Un petit mot pour vous',
+        thank: [
+          'Merci d\'utiliser RefreshMate. Cet outil est né parce que je devais surveiller les changements de pages.',
+          'S\'il vous aide aussi, c\'est déjà la plus belle récompense.',
+          'Si vous souhaitez m\'offrir un <span class="heart">☕</span> café, cela me ferait très plaisir.'
+        ],
+        disclaimer: 'Le parrainage sur Ko-fi est purement volontaire et n\'affecte aucune fonctionnalité. Le parrainage n\'est lié à aucune fonctionnalité de l\'extension — il s\'agit uniquement d\'un soutien initié par l\'utilisateur.',
+        ctaHint: 'Cliquez sur le bouton ci-dessous pour accéder à la page de soutien Ko-fi',
+        btnText: 'Buy Me a Coffee',
+        privacyPolicy: 'Politique de Confidentialité'
+      }
+    };
 
-  <footer>&copy; 2026 RefreshMate. All rights reserved.</footer>
-</div>
+    // ============================================================
+    //  Language detection
+    // ============================================================
+    function detectLang() {
+      const raw = (navigator.language || 'en').toLowerCase();
+      const map = { 'zh-tw': 'zh', 'zh-hans': 'zh', 'zh-hant': 'zh', 'zh-cn': 'zh' };
+      const mapped = map[raw] || raw;
+      const base = mapped.split('-')[0];
+      return I18N[mapped] ? mapped : (I18N[base] ? base : 'en');
+    }
+
+    // ============================================================
+    //  Apply translations to DOM
+    // ============================================================
+    function applyLang(lang) {
+      const t = I18N[lang];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+
+      document.getElementById('featureList').innerHTML = t.features.map(f => `<li>${f}</li>`).join('');
+      document.getElementById('thankText').innerHTML = t.thank.map(p => `<p>${p}</p>`).join('');
+      document.documentElement.lang = lang;
+    }
+
+    // ============================================================
+    //  Init
+    // ============================================================
+    applyLang(detectLang());
+  </script>
 </body>
 </html>
