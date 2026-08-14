@@ -19,7 +19,6 @@ Need to monitor a page for changes? RefreshMate auto-refreshes pages on your sch
 | 🔔 **Keyword Alerts** | Browser notifications when keywords appear/disappear |
 | 🔒 **CAPTCHA Detection** | Auto-stops refresh when CAPTCHA is detected |
 | 💾 **Per-Site Settings** | Each domain saves its own config independently |
-| 📤 **Import/Export** | JSON backup of all settings |
 
 ---
 
@@ -35,7 +34,6 @@ Need to monitor a page for changes? RefreshMate auto-refreshes pages on your sch
 | 🖼️ **Floating Overlay** | Mini countdown timer on the page |
 | ⌨️ **Auto-Pause** | Pauses when typing in input fields |
 | 💾 **Domain Memory** | Per-site settings saved automatically |
-| 📤 **Export/Import** | JSON config backup and restore |
 
 ---
 

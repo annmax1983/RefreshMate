@@ -42,7 +42,7 @@
   <h2 id="h1"></h2><p id="p1"></p><ul id="l1"></ul>
   <h2 id="h2"></h2><p id="p2"></p><ul id="l2"></ul><p id="p2note"></p>
   <h2 id="h3"></h2><p id="p3"></p>
-  <h2 id="h4"></h2><p id="p4"></p>
+  <h2 id="h4"></h2><p id="p4"></p><ul id="l4"></ul>
   <h2 id="h5"></h2><p id="p5"></p>
   <h2 id="h6"></h2><p id="p6"></p>
   <footer><p>&copy; 2026 RefreshMate. <span id="rights"></span></p></footer>
@@ -53,9 +53,10 @@ const I18N = {
     title: '🔒 Privacy Policy', updated: 'Last updated: July 2026',
     highlight: '<strong>Short version:</strong> RefreshMate does not collect, transmit, or store any of your personal data. All settings stay in your browser. Nothing leaves your device.',
     h1: 'Data Collection', p1: 'RefreshMate does <strong>not</strong> collect any personal data:', l1: ['Browsing history or URLs visited', 'Page text, images, or content', 'Cookies or tracking identifiers', 'Usage analytics or telemetry'],
-    h2: 'Permissions', p2: 'RefreshMate requests minimal permissions:', l2: ['<strong>declarativeNetRequest</strong> — Blocks websites using declarative rules. Does not read page content.', '<strong>storage</strong> — Saves your blocklist and settings locally. No data is uploaded.', '<strong>alarms</strong> — Manages temporary bypass timers. No background tracking.', '<strong>activeTab</strong> — Only accesses the current tab when you interact with the extension.'], p2note: 'No <code>&lt;all_urls&gt;</code> host permission. RefreshMate only acts on sites you explicitly block.',
-    h3: 'Data Storage', p3: 'All settings are stored locally in your browser using <code>chrome.storage.sync</code>. Data is deleted when you uninstall the extension.',
-    h4: 'Third-Party Services', p4: 'RefreshMate does not connect to any third-party servers, APIs, or analytics services. Zero network requests.',
+    h2: 'Permissions', p2: 'RefreshMate requests the following permissions, all used solely for core functionality:', l2: ['<strong>activeTab</strong> — Accesses the current tab only when you interact with the extension popup.', '<strong>tabs</strong> — Finds and refreshes tabs matching the target domain.', '<strong>storage</strong> — Saves your per-site refresh settings locally. No data is uploaded.', '<strong>alarms</strong> — Schedules auto-refresh timers (intervals ≥ 1 minute). No background tracking.', '<strong>notifications</strong> — Shows browser notifications when monitored keywords appear or disappear.', '<strong>unlimitedStorage</strong> — Stores settings for an unlimited number of domains.'], p2note: 'A content script is injected on all pages to display a small floating countdown overlay and detect keyword matches. The content script does not read or transmit any page content.',
+    h3: 'Data Storage', p3: 'All settings are stored locally in your browser using <code>chrome.storage.local</code>. Data is automatically deleted when you uninstall the extension.',
+    h4: 'Third-Party Services', p4: 'RefreshMate connects to one external service for premium license validation only:',
+    l4: ['<strong>License activation/verification</strong> — When you activate a license key, a request is sent to <code>api.annmax1983.com</code>. Only your license key and an anonymous device fingerprint hash are transmitted. No browsing data or page content is included.', '<strong>Frequency</strong> — License is verified once every 24 hours. If offline, cached license works for up to 7 days.', '<strong>What is NOT sent</strong> — URLs, page text, browsing history, cookies, or any personal information.'],
     h5: 'Open Source', p5: 'RefreshMate is open-source. No ads, no tracking, no hidden data collection.',
     h6: 'Contact', p6: 'If you have questions, please open an issue on <a href="https://github.com/annmax1983/RefreshMate">GitHub</a>.',
     rights: 'All rights reserved.'
@@ -64,9 +65,10 @@ const I18N = {
     title: '🔒 隐私条款', updated: '最后更新：2026 年 7 月',
     highlight: '<strong>简要说明：</strong>RefreshMate 不收集、传输或存储您的任何个人数据。所有设置保存在您的浏览器中，永远不会离开您的设备。',
     h1: '数据收集', p1: 'RefreshMate <strong>不会</strong>收集任何个人数据：', l1: ['浏览历史或访问的网址', '页面文字、图片或内容', 'Cookie 或跟踪标识符', '使用分析或遥测数据'],
-    h2: '权限说明', p2: 'RefreshMate 仅请求最低权限：', l2: ['<strong>declarativeNetRequest</strong> — 使用声明式规则拦截网站，不读取页面内容', '<strong>storage</strong> — 本地保存屏蔽列表和设置，不上传任何数据', '<strong>alarms</strong> — 管理临时放行计时器，无后台追踪', '<strong>activeTab</strong> — 仅在您操作扩展时访问当前标签页'], p2note: '不申请 <code>&lt;all_urls&gt;</code> host 权限。RefreshMate 仅对您明确屏蔽的网站生效。',
-    h3: '数据存储', p3: '所有设置通过 <code>chrome.storage.sync</code> 存储在浏览器本地。卸载扩展时数据会自动删除。',
-    h4: '第三方服务', p4: 'RefreshMate 不连接任何第三方服务器、API 或分析服务。零网络请求。',
+    h2: '权限说明', p2: 'RefreshMate 请求以下权限，均仅用于核心功能：', l2: ['<strong>activeTab</strong> — 仅在您操作扩展弹窗时访问当前标签页', '<strong>tabs</strong> — 查找并刷新与目标域名匹配的标签页', '<strong>storage</strong> — 本地保存各站点的刷新设置，不上传任何数据', '<strong>alarms</strong> — 调度自动刷新定时器（间隔 ≥ 1 分钟），无后台追踪', '<strong>notifications</strong> — 当监控的关键词出现或消失时显示浏览器通知', '<strong>unlimitedStorage</strong> — 存储无限数量站点的设置'], p2note: '内容脚本会在所有页面注入，用于显示小型浮动倒计时悬浮窗并检测关键词匹配。内容脚本不会读取或传输任何页面内容。',
+    h3: '数据存储', p3: '所有设置通过 <code>chrome.storage.local</code> 存储在浏览器本地。卸载扩展时数据会自动删除。',
+    h4: '第三方服务', p4: 'RefreshMate 仅在高级授权验证时连接一个外部服务：',
+    l4: ['<strong>授权激活/验证</strong> — 激活授权密钥时，请求发送至 <code>api.annmax1983.com</code>。仅传输授权密钥和匿名设备指纹哈希，不包含浏览数据或页面内容。', '<strong>频率</strong> — 每 24 小时验证一次授权。离线时缓存授权可使用最多 7 天。', '<strong>不会传输的内容</strong> — 网址、页面文字、浏览历史、Cookie 或任何个人信息。'],
     h5: '开源', p5: 'RefreshMate 开源。无广告、无追踪、无隐藏数据收集。',
     h6: '联系方式', p6: '如有疑问，请在 <a href="https://github.com/annmax1983/RefreshMate">GitHub</a> 上提交 Issue。',
     rights: '保留所有权利。'
@@ -75,9 +77,10 @@ const I18N = {
     title: '🔒 プライバシーポリシー', updated: '最終更新：2026年7月',
     highlight: '<strong>要約：</strong>RefreshMate は個人データを収集、送信、保存しません。すべての設定はブラウザ内に保存されます。',
     h1: 'データ収集', p1: 'RefreshMate は個人データを<strong>収集しません</strong>：', l1: ['閲覧履歴またはアクセスしたURL', 'ページテキスト、画像、コンテンツ', 'Cookie または追跡識別子', '使用分析またはテレメトリ'],
-    h2: '権限', p2: 'RefreshMate は最小限の権限のみ要求します：', l2: ['<strong>declarativeNetRequest</strong> — 宣言ルールでサイトをブロック。ページ内容は読み取りません。', '<strong>storage</strong> — ブロックリストと設定をローカル保存。データはアップロードされません。', '<strong>alarms</strong> — 一時バイパスタイマーを管理。バックグラウンド追跡なし。', '<strong>activeTab</strong> — 拡張機能操作時のみ現在のタブにアクセス。'], p2note: '<code>&lt;all_urls&gt;</code> ホスト権限は使用しません。',
-    h3: 'データ保存', p3: 'すべての設定は <code>chrome.storage.sync</code> でローカル保存されます。',
-    h4: 'サードパーティサービス', p4: 'RefreshMate はサードパーティサーバー、API、分析サービスに接続しません。',
+    h2: '権限', p2: 'RefreshMate は以下の権限を要求します。すべてコア機能専用です：', l2: ['<strong>activeTab</strong> — ポップアップ操作時のみ現在のタブにアクセス', '<strong>tabs</strong> — 対象ドメインのタブを検索して更新', '<strong>storage</strong> — サイトごとの更新設定をローカル保存。データはアップロードされません', '<strong>alarms</strong> — 自動更新タイマーをスケジュール（間隔 ≥ 1分）。バックグラウンド追跡なし', '<strong>notifications</strong> — 監視キーワードの出現/消失時にブラウザ通知を表示', '<strong>unlimitedStorage</strong> — 無限のドメイン設定を保存'], p2note: 'コンテンツスクリプトはすべてのページに注入され、小さなフローティングカウントダウンオーバーレイとキーワードマッチの検出に使用されます。ページコンテンツの読み取りや送信は行いません。',
+    h3: 'データ保存', p3: 'すべての設定は <code>chrome.storage.local</code> でローカル保存されます。アンインストール時に自動削除されます。',
+    h4: 'サードパーティサービス', p4: 'RefreshMate はプレミアムライセンスの検証時にのみ外部サービスに接続します：',
+    l4: ['<strong>ライセンス有効化/検証</strong> — ライセンスキーを有効化すると、<code>api.annmax1983.com</code> にリクエストが送信されます。ライセンスキーと匿名のデバイスフィンガープリントハッシュのみ送信されます。', '<strong>頻度</strong> — 24時間ごとにライセンスを検証。オフライン時はキャッシュされたライセンスが最大7日間機能します。', '<strong>送信されないもの</strong> — URL、ページテキスト、閲覧履歴、Cookie、個人情報。'],
     h5: 'オープンソース', p5: 'RefreshMate はオープンソース。広告なし、追跡なし。',
     h6: 'お問い合わせ', p6: 'ご質問は <a href="https://github.com/annmax1983/RefreshMate">GitHub</a> で Issue を作成してください。',
     rights: '全著作権所有。'
@@ -86,9 +89,10 @@ const I18N = {
     title: '🔒 Datenschutzrichtlinie', updated: 'Letzte Aktualisierung: Juli 2026',
     highlight: '<strong>Kurzfassung:</strong> RefreshMate erfasst, übermittelt oder speichert keine Ihrer Daten. Alle Einstellungen bleiben in Ihrem Browser.',
     h1: 'Datenerfassung', p1: 'RefreshMate erfasst <strong>keine</strong> personenbezogenen Daten:', l1: ['Browserverlauf oder besuchte URLs', 'Seitentexte, Bilder oder Inhalte', 'Cookies oder Tracking-Kennungen', 'Nutzungsanalysen oder Telemetrie'],
-    h2: 'Berechtigungen', p2: 'RefreshMate beantragt nur minimale Berechtigungen:', l2: ['<strong>declarativeNetRequest</strong> — Blockiert Websites mit deklarativen Regeln.', '<strong>storage</strong> — Speichert Sperrliste und Einstellungen lokal.', '<strong>alarms</strong> — Verwaltet temporäre Umgehungstimer.', '<strong>activeTab</strong> — Nur Zugriff bei aktiver Interaktion.'], p2note: 'Keine <code>&lt;all_urls&gt;</code> Host-Berechtigung.',
-    h3: 'Datenspeicherung', p3: 'Alle Einstellungen werden lokal über <code>chrome.storage.sync</code> gespeichert.',
-    h4: 'Drittanbieterdienste', p4: 'RefreshMate verbindet sich nicht mit Drittanbietern. Null Netzwerkanfragen.',
+    h2: 'Berechtigungen', p2: 'RefreshMate fordert folgende Berechtigungen an, die ausschließlich für Kernfunktionen verwendet werden:', l2: ['<strong>activeTab</strong> — Zugriff auf den aktuellen Tab nur bei Popup-Interaktion.', '<strong>tabs</strong> — Sucht und aktualisiert Tabs der Zieldomain.', '<strong>storage</strong> — Speichert die Aktualisierungseinstellungen pro Seite lokal. Keine Daten werden hochgeladen.', '<strong>alarms</strong> — Plant Auto-Aktualisierungstimer (Intervall ≥ 1 Minute). Kein Hintergrund-Tracking.', '<strong>notifications</strong> — Zeigt Browser-Benachrichtigungen bei Schlüsselwort-Erkennung.', '<strong>unlimitedStorage</strong> — Speichert Einstellungen für unbegrenzt viele Domains.'], p2note: 'Ein Content-Skript wird auf allen Seiten injiziert, um ein kleines schwebendes Countdown-Overlay und die Schlüsselwort-Erkennung anzuzeigen. Seiteninhalte werden nicht gelesen oder übertragen.',
+    h3: 'Datenspeicherung', p3: 'Alle Einstellungen werden lokal über <code>chrome.storage.local</code> gespeichert. Bei Deinstallation werden die Daten automatisch gelöscht.',
+    h4: 'Drittanbieterdienste', p4: 'RefreshMate verbindet sich nur für die Premium-Lizenzvalidierung mit einem externen Dienst:',
+    l4: ['<strong>Lizenzaktivierung/-prüfung</strong> — Bei der Aktivierung wird eine Anfrage an <code>api.annmax1983.com</code> gesendet. Nur Lizenzschlüssel und anonymer Gerätefingerabdruck werden übermittelt.', '<strong>Häufigkeit</strong> — Lizenz wird alle 24 Stunden geprüft. Im Offline-Modus funktioniert die gecachte Lizenz bis zu 7 Tage.', '<strong>Was NICHT gesendet wird</strong> — URLs, Seitentexte, Browserverlauf, Cookies oder persönliche Daten.'],
     h5: 'Open Source', p5: 'RefreshMate ist Open Source. Keine Werbung, kein Tracking.',
     h6: 'Kontakt', p6: 'Bei Fragen erstellen Sie bitte ein Issue auf <a href="https://github.com/annmax1983/RefreshMate">GitHub</a>.',
     rights: 'Alle Rechte vorbehalten.'
@@ -97,9 +101,10 @@ const I18N = {
     title: '🔒 Política de Privacidad', updated: 'Última actualización: julio de 2026',
     highlight: '<strong>Resumen:</strong> RefreshMate no recopila, transmite ni almacena ningún dato personal. Toda la configuración permanece en su navegador.',
     h1: 'Recopilación de Datos', p1: 'RefreshMate <strong>no</strong> recopila ningún dato personal:', l1: ['Historial de navegación o URLs visitadas', 'Texto, imágenes o contenido de páginas', 'Cookies o identificadores de seguimiento', 'Analíticas de uso o telemetría'],
-    h2: 'Permisos', p2: 'RefreshMate solicita permisos mínimos:', l2: ['<strong>declarativeNetRequest</strong> — Bloquea sitios con reglas declarativas.', '<strong>storage</strong> — Guarda bloqueo y ajustes localmente.', '<strong>alarms</strong> — Gestiona temporizadores de bypass.', '<strong>activeTab</strong> — Solo acceso con interacción activa.'], p2note: 'Sin permiso de host <code>&lt;all_urls&gt;</code>.',
-    h3: 'Almacenamiento', p3: 'Todos los ajustes se almacenan localmente con <code>chrome.storage.sync</code>.',
-    h4: 'Servicios de Terceros', p4: 'RefreshMate no se conecta a servidores de terceros. Cero solicitudes de red.',
+    h2: 'Permisos', p2: 'RefreshMate solicita los siguientes permisos, todos usados únicamente para funciones principales:', l2: ['<strong>activeTab</strong> — Accede a la pestaña actual solo al interactuar con el popup.', '<strong>tabs</strong> — Busca y actualiza pestañas del dominio objetivo.', '<strong>storage</strong> — Guarda los ajustes de actualización por sitio localmente. No se suben datos.', '<strong>alarms</strong> — Programa temporizadores de actualización automática (intervalo ≥ 1 minuto). Sin seguimiento en segundo plano.', '<strong>notifications</strong> — Muestra notificaciones del navegador cuando las palabras clave aparecen o desaparecen.', '<strong>unlimitedStorage</strong> — Almacena ajustes para un número ilimitado de dominios.'], p2note: 'Un script de contenido se inyecta en todas las páginas para mostrar un pequeño overlay flotante de cuenta regresiva y detectar coincidencias de palabras clave. No lee ni transmite contenido de la página.',
+    h3: 'Almacenamiento', p3: 'Todos los ajustes se almacenan localmente con <code>chrome.storage.local</code>. Los datos se eliminan automáticamente al desinstalar.',
+    h4: 'Servicios de Terceros', p4: 'RefreshMate solo se conecta a un servicio externo para la validación de licencias premium:',
+    l4: ['<strong>Activación/verificación de licencia</strong> — Al activar una clave, se envía una solicitud a <code>api.annmax1983.com</code>. Solo se transmiten la clave y una huella digital anónima del dispositivo.', '<strong>Frecuencia</strong> — La licencia se verifica cada 24 horas. Sin conexión, la licencia en caché funciona hasta 7 días.', '<strong>Lo que NO se envía</strong> — URLs, texto de páginas, historial, cookies o datos personales.'],
     h5: 'Código Abierto', p5: 'RefreshMate es de código abierto. Sin anuncios, sin rastreo.',
     h6: 'Contacto', p6: 'Si tiene preguntas, abra un issue en <a href="https://github.com/annmax1983/RefreshMate">GitHub</a>.',
     rights: 'Todos los derechos reservados.'
@@ -108,9 +113,10 @@ const I18N = {
     title: '🔒 Politique de Confidentialité', updated: 'Dernière mise à jour : juillet 2026',
     highlight: '<strong>Résumé :</strong> RefreshMate ne collecte, ne transmet ni ne stocke aucune donnée personnelle. Toute la configuration reste dans votre navigateur.',
     h1: 'Collecte de Données', p1: 'RefreshMate ne collecte <strong>aucune</strong> donnée personnelle :', l1: ['Historique de navigation ou URLs visitées', 'Texte, images ou contenu des pages', 'Cookies ou identifiants de suivi', 'Analyses d\'utilisation ou télémétrie'],
-    h2: 'Permissions', p2: 'RefreshMate ne demande que des permissions minimales :', l2: ['<strong>declarativeNetRequest</strong> — Bloque les sites avec des règles déclaratives.', '<strong>storage</strong> — Enregistre la liste de blocage et les paramètres localement.', '<strong>alarms</strong> — Gère les minuteurs de contournement temporaire.', '<strong>activeTab</strong> — Accès uniquement lors d\'une interaction active.'], p2note: 'Aucune permission hôte <code>&lt;all_urls&gt;</code>.',
-    h3: 'Stockage', p3: 'Tous les paramètres sont stockés localement via <code>chrome.storage.sync</code>.',
-    h4: 'Services Tiers', p4: 'RefreshMate ne se connecte à aucun serveur tiers. Zéro requête réseau.',
+    h2: 'Permissions', p2: 'RefreshMate demande les permissions suivantes, toutes utilisées uniquement pour les fonctions principales :', l2: ['<strong>activeTab</strong> — Accède à l\'onglet actuel uniquement lors de l\'interaction avec le popup.', '<strong>tabs</strong> — Recherche et actualise les onglets du domaine cible.', '<strong>storage</strong> — Enregistre les paramètres d\'actualisation par site localement. Aucune donnée n\'est envoyée.', '<strong>alarms</strong> — Planifie les minuteurs d\'actualisation automatique (intervalle ≥ 1 minute). Pas de suivi en arrière-plan.', '<strong>notifications</strong> — Affiche des notifications du navigateur lorsque les mots-clés apparaissent ou disparaissent.', '<strong>unlimitedStorage</strong> — Stocke les paramètres pour un nombre illimité de domaines.'], p2note: 'Un script de contenu est injecté sur toutes les pages pour afficher un petit overlay flottant de compte à rebourd et détecter les correspondances de mots-clés. Le contenu des pages n\'est ni lu ni transmis.',
+    h3: 'Stockage', p3: 'Tous les paramètres sont stockés localement via <code>chrome.storage.local</code>. Les données sont automatiquement supprimées lors de la désinstallation.',
+    h4: 'Services Tiers', p4: 'RefreshMate ne se connecte qu'à un service externe pour la validation des licences premium :',
+    l4: ['<strong>Activation/vérification de licence</strong> — Lors de l'activation, une requête est envoyée à <code>api.annmax1983.com</code>. Seules la clé et une empreinte d'appareil anonyme sont transmises.', '<strong>Fréquence</strong> — La licence est vérifiée toutes les 24 heures. Hors ligne, la licence en cache fonctionne jusqu'à 7 jours.', '<strong>Ce qui N'est PAS envoyé</strong> — URLs, texte des pages, historique, cookies ou données personnelles.'],
     h5: 'Open Source', p5: 'RefreshMate est open source. Pas de publicités, pas de suivi.',
     h6: 'Contact', p6: 'Pour toute question, ouvrez un issue sur <a href="https://github.com/annmax1983/RefreshMate">GitHub</a>.',
     rights: 'Tous droits réservés.'
@@ -140,6 +146,9 @@ function apply(t) {
   });
   if (t.l1) document.getElementById('l1').innerHTML = t.l1.map(i => '<li>'+i+'</li>').join('');
   if (t.l2) document.getElementById('l2').innerHTML = t.l2.map(i => '<li>'+i+'</li>').join('');
+  // Render l4 (third-party services details) if present
+  const l4El = document.getElementById('l4');
+  if (l4El && t.l4) l4El.innerHTML = t.l4.map(i => '<li>'+i+'</li>').join('');
   document.documentElement.lang = detectLang();
 }
 
