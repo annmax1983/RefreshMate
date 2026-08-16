@@ -37,6 +37,20 @@ Need to monitor a page for changes? RefreshMate auto-refreshes pages on your sch
 
 ---
 
+## Free vs Pro
+
+| Capability | Free | Pro (License) |
+|------------|------|----------------|
+| 🗂️ **Simultaneous tabs** | **1 tab** at a time | ✅ Unlimited |
+| 🎲 **Random interval range** | — | ✅ |
+| 🔔 **Keyword / regex alerts** | — | ✅ |
+| 🔄 **Any page change detection** | — | ✅ |
+| 🆘 **Priority support** | — | ✅ |
+
+The free version refreshes **only one tab at a time** across the whole browser. Upgrade to Pro to refresh multiple tabs simultaneously.
+
+---
+
 ## Supported Browsers
 
 | Browser | Status |
@@ -52,7 +66,7 @@ Need to monitor a page for changes? RefreshMate auto-refreshes pages on your sch
 1. Clone or download this repository
 2. Open `chrome://extensions/` (or `edge://extensions/`)
 3. Enable **Developer mode**
-4. Click **Load unpacked** → select the `refresh-mate` folder
+4. Click **Load unpacked** → select the `RefreshMate` folder
 5. Click the 🔄 RefreshMate icon to start
 
 ### Build
@@ -71,7 +85,7 @@ npm run build
 - **storage** — Save settings locally
 - **alarms** — Schedule refresh timers
 - **notifications** — Browser notifications for keyword alerts
-- No network requests, no data upload, no tracking
+- **License validation** — anonymous device fingerprint + license key sent to `api.annmax1983.com` once every 24h. No browsing data transmitted.
 
 **[📄 Privacy Policy](privacy-policy.html)**
 
