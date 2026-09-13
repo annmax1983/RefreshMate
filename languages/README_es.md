@@ -1,59 +1,60 @@
 # RefreshMate
+
 [English](../README.md) | [中文](README_zh.md) | [日本語](README_ja.md) | [Deutsch](README_de.md) | Español | [Français](README_fr.md)
 
-Una extensión ligera de navegador para actualizar páginas automáticamente con intervalos configurables y alertas de cambios de palabras clave.
+Una extensión ligera para el navegador que permite la actualización automática de páginas con intervalos personalizables y alertas por cambio de palabras clave.
 
-> Basado en Chromium · Manifest V3 · Permisos mínimos · Solo local
+> Basada en Chromium · Manifest V3 · Permisos mínimos · Solo local
 
 ---
 
 ## ¿Por qué RefreshMate?
 
-¿Necesitas monitorear una página para detectar cambios? RefreshMate actualiza páginas automáticamente según tu horario y te alerta cuando las palabras clave aparecen o desaparecen — perfecto para el seguimiento de acciones, la venta de entradas o cualquier página sensible al tiempo.
+¿Necesitas monitorizar una página para detectar cambios? RefreshMate actualiza las páginas automáticamente según tu planificación y te avisa cuando aparecen o desaparecen palabras clave — ideal para seguimiento de acciones, venta de entradas o cualquier página con contenido sensible al tiempo.
 
 | Ventaja | Detalle |
-|---------|---------|
-| ⏱️ **Intervalos personalizados** | Atajos rápidos (5s/30s/1min/5min) + entrada personalizada |
-| 🎲 **Intervalo aleatorio** | Rango aleatorio anti-detección para evitar bloqueos |
-| 🔔 **Alertas de palabras clave** | Notificaciones del navegador al aparecer/desaparecer |
-| 🔒 **Detección de CAPTCHA** | Detiene la actualización al detectar CAPTCHA |
-| 💾 **Ajustes por sitio** | Cada dominio guarda su propia configuración |
+|---------|--------|
+| ⏱️ **Intervalos personalizados** | Preajustes rápidos (5s/30s/1min/5min) + entrada personalizada |
+| 🎲 **Intervalo aleatorio** | Rango aleatorio anti-detección para evitar bloqueos del sitio |
+| 🔔 **Alertas por palabras clave** | Notificaciones del navegador cuando aparecen o desaparecen palabras clave |
+| 🔒 **Detección de CAPTCHA** | Detiene automáticamente la actualización cuando se detecta un CAPTCHA |
+| 💾 **Configuración por sitio** | Cada dominio guarda su propia configuración de forma independiente |
 
 ---
 
-## Funciones
+## Funcionalidades
 
-| Función | Descripción |
+| Funcionalidad | Descripción |
 |---------|-------------|
-| ⏱️ **Actualización automática** | Intervalos desde 5 segundos hasta horas |
-| 🎲 **Rango aleatorio** | Rango mínimo/máximo, intervalo aleatorio en cada ciclo |
-| 🧹 **Forzar actualización** | Omite la caché (estilo Ctrl+Shift+R) |
-| 🔔 **Monitor de palabras clave** | Alerta cuando el texto aparece o desaparece |
-| ⚠️ **Detención por CAPTCHA** | Detecta patrones comunes de CAPTCHA y se detiene automáticamente |
+| ⏱️ **Actualización automática** | Configura intervalos desde 5 segundos hasta horas |
+| 🎲 **Rango aleatorio** | Establece un rango mínimo/máximo, el intervalo se aleatoriza en cada ciclo |
+| 🧹 **Actualización forzada** | Omite la caché con una recarga tipo Ctrl+Shift+R |
+| 🔔 **Monitor de palabras clave** | Alerta cuando un texto aparece o desaparece en la página |
+| ⚠️ **Detección de CAPTCHA** | Detecta patrones comunes de CAPTCHA y se detiene automáticamente |
 | 🖼️ **Superposición flotante** | Mini temporizador de cuenta atrás en la página |
-| ⌨️ **Pausa automática** | Pausa al escribir en campos de entrada |
-| 💾 **Memoria de dominio** | Ajustes por sitio guardados automáticamente |
+| ⌨️ **Pausa automática** | Se pausa al escribir en campos de entrada |
+| 💾 **Memoria por dominio** | Configuración por sitio guardada automáticamente |
 
 ---
 
-## Gratis vs. Pro
+## Gratis vs Pro
 
-| Función | Gratis | Pro (Licencia) |
-|---------|--------|-----------------|
-| 🗂️ **Pestañas simultáneas** | **1 pestaña** a la vez | ✅ Ilimitado |
+| Capacidad | Gratis | Pro (Licencia) |
+|------------|------|----------------|
+| 🗂️ **Pestañas simultáneas** | **1 pestaña** a la vez | ✅ Ilimitadas |
 | 🎲 **Rango de intervalo aleatorio** | — | ✅ |
-| 🔔 **Alertas de palabras clave / regex** | — | ✅ |
-| 🔄 **Detección de cualquier cambio** | — | ✅ |
+| 🔔 **Alertas por palabra clave / regex** | — | ✅ |
+| 🔄 **Detección de cualquier cambio en la página** | — | ✅ |
 | 🆘 **Soporte prioritario** | — | ✅ |
 
-La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegador. Mejora a Pro para actualizar varias pestañas simultáneamente.
+La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegador. Pásate a Pro para actualizar varias pestañas simultáneamente.
 
 ---
 
 ## Navegadores compatibles
 
 | Navegador | Estado |
-|-----------|--------|
+|---------|--------|
 | Google Chrome | ✅ Totalmente compatible |
 | Microsoft Edge | ✅ Totalmente compatible |
 | Otros basados en Chromium | ✅ Debería funcionar |
@@ -64,9 +65,9 @@ La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegad
 
 1. Clona o descarga este repositorio
 2. Abre `chrome://extensions/` (o `edge://extensions/`)
-3. Activa el **modo desarrollador**
+3. Activa el **modo de desarrollador**
 4. Haz clic en **Cargar descomprimida** → selecciona la carpeta `RefreshMate`
-5. Haz clic en el icono 🔄 RefreshMate para empezar
+5. Haz clic en el icono 🔄 de RefreshMate para empezar
 
 ### Compilación
 
@@ -79,28 +80,17 @@ npm run build
 
 ## Privacidad
 
-- **activeTab** — Accede a la pestaña actual al interactuar
-- **tabs** — Encuentra pestañas para actualizar por dominio
-- **storage** — Guarda los ajustes localmente
-- **alarms** — Programa los temporizadores de actualización
-- **notifications** — Notificaciones del navegador para alertas de palabras clave
-- **Validación de licencia** — huella digital anónima del dispositivo + clave de licencia enviadas a `api.annmax1983.com` una vez cada 24 h. No se transmiten datos de navegación.
+- **activeTab** — Accede a la pestaña actual cuando interactúas con la extensión
+- **tabs** — Busca pestañas para actualizar por dominio
+- **storage** — Guarda la configuración localmente
+- **alarms** — Programa temporizadores de actualización
+- **notifications** — Notificaciones del navegador para alertas por palabras clave
+- **Validación de licencia** — huella de dispositivo anónima + clave de licencia enviada a `api.annmax1983.com` una vez cada 24h. No se transmiten datos de navegación.
 
-**[📄 Política de privacidad](../privacy-policy.html)**
-
----
+**[📄 Política de privacidad](privacy-policy.html)**
 
 ---
-
-## Aviso de código fuente
-
-> ⚠️ **Este repositorio no publica el código fuente.** Contiene únicamente documentación de uso, notas de versión y recursos de soporte. La extensión se distribuye exclusivamente a través de Chrome Web Store. No se proporcionan paquetes de instalación sin conexión ni código fuente para usuarios finales.
-
 
 ## Licencia
 
 Copyright © 2026 RefreshMate. Todos los derechos reservados.
-
----
-
-> **Nota:** Este repositorio es **solo para la exhibición del proyecto**.
