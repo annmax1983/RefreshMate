@@ -6,6 +6,8 @@ A lightweight browser extension for customizable auto page refresh with random i
 
 > Chromium-based · Manifest V3 · Minimal Permissions · Local Only
 
+Part of the [VKT](https://www.annmax1983.com/) privacy-first toolkit.
+
 ---
 
 ## Why RefreshMate?
@@ -63,18 +65,13 @@ The free version refreshes **only one tab at a time** across the whole browser. 
 
 ## Installation
 
-1. Clone or download this repository
-2. Open `chrome://extensions/` (or `edge://extensions/`)
-3. Enable **Developer mode**
-4. Click **Load unpacked** → select the `RefreshMate` folder
-5. Click the 🔄 RefreshMate icon to start
+| Store | Link |
+|-------|------|
+| Chrome Web Store | [Install for Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
+| Microsoft Edge Add-ons | [Install for Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
 
-### Build
-
-```bash
-npm install
-npm run build
-```
+This repository hosts the project documentation only — the extension source code and
+offline installation packages are not distributed here.
 
 ---
 
@@ -83,8 +80,9 @@ npm run build
 - **activeTab** — Access current tab when you interact with the extension
 - **tabs** — Find tabs to refresh by domain
 - **storage** — Save settings locally
-- **alarms** — Schedule refresh timers
+- **alarms** — Schedule refresh timers (in-worker timers handle intervals below 30s)
 - **notifications** — Browser notifications for keyword alerts
+- **offscreen** — Hidden document used only to play the alert sound
 - **License validation** — anonymous device fingerprint + license key sent to `api.annmax1983.com` once every 24h. No browsing data transmitted.
 
 **[📄 Privacy Policy](privacy-policy.html)**
@@ -97,4 +95,4 @@ Copyright © 2026 RefreshMate. All rights reserved.
 
 ---
 
-> **Note:** This repository is for **project showcase purposes only**.
+> **Note:** This repository contains **documentation only**. The extension source code is not distributed to end users — install from the store links above.
