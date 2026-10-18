@@ -84,7 +84,7 @@ npm run build
 - **storage** — 本地保存设置
 - **alarms** — 定时刷新调度
 - **notifications** — 关键词提醒的浏览器通知
-- **许可证校验** — 匿名设备指纹 + 许可证密钥每 24 小时发送至 `api.annmax1983.com`，不传输浏览数据
+- **许可证校验** — 随机安装标识 + 许可证密钥每 2 小时发送至 `api.annmax1983.com`，不传输浏览数据
 
 **[📄 隐私政策](../privacy-policy.html)**
 

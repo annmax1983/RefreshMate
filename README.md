@@ -83,7 +83,7 @@ offline installation packages are not distributed here.
 - **alarms** — Schedule refresh timers (in-worker timers handle intervals below 30s)
 - **notifications** — Browser notifications for keyword alerts
 - **offscreen** — Hidden document used only to play the alert sound
-- **License validation** — anonymous device fingerprint + license key sent to `api.annmax1983.com` once every 24h. No browsing data transmitted.
+- **License validation** — anonymous install identifier + license key sent to `api.annmax1983.com` once every 2h. No browsing data transmitted.
 
 **[📄 Privacy Policy](privacy-policy.html)**
 

@@ -85,7 +85,7 @@ npm run build
 - **storage** — Einstellungen lokal speichern
 - **alarms** — Refresh-Timer planen
 - **notifications** — Browser-Benachrichtigungen für Keyword-Alarme
-- **Lizenzvalidierung** — Anonymer Geräte-Fingerprint + Lizenzschlüssel wird einmal alle 24h an `api.annmax1983.com` gesendet. Keine Browserdaten übertragen.
+- **Lizenzvalidierung** — Eine zufällige Installationskennung + Lizenzschlüssel wird einmal alle 2h an `api.annmax1983.com` gesendet. Keine Browserdaten übertragen.
 
 **[📄 Datenschutzerklärung](privacy-policy.html)**
 

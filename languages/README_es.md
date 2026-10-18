@@ -85,7 +85,7 @@ npm run build
 - **storage** — Guarda la configuración localmente
 - **alarms** — Programa temporizadores de actualización
 - **notifications** — Notificaciones del navegador para alertas por palabras clave
-- **Validación de licencia** — huella de dispositivo anónima + clave de licencia enviada a `api.annmax1983.com` una vez cada 24h. No se transmiten datos de navegación.
+- **Validación de licencia** — un identificador de instalación aleatorio + clave de licencia enviada a `api.annmax1983.com` una vez cada 2h. No se transmiten datos de navegación.
 
 **[📄 Política de privacidad](privacy-policy.html)**
 

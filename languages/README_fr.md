@@ -85,7 +85,7 @@ npm run build
 - **storage** — Sauvegarde les paramètres en local
 - **alarms** — Planifie les minuteurs de rafraîchissement
 - **notifications** — Notifications du navigateur pour les alertes par mot-clé
-- **Validation de licence** — empreinte anonyme de l'appareil + clé de licence envoyées à `api.annmax1983.com` une fois toutes les 24h. Aucune donnée de navigation transmise.
+- **Validation de licence** — un identifiant d'installation aléatoire + clé de licence envoyées à `api.annmax1983.com` une fois toutes les 2h. Aucune donnée de navigation transmise.
 
 **[📄 Politique de confidentialité](privacy-policy.html)**
 
