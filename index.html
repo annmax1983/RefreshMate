@@ -1,420 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RefreshMate - Auto Page Refresh & Keyword Monitor</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RefreshMate — Auto refresh pages</title>
+<meta name="description" content="RefreshMate is an auto refresh extension for Chrome and Edge that reloads a page on a schedule you choose, from a few seconds to several hours. Set an interva">
+<link rel="icon" href="icons/icon128.png">
+<style>
+:root{
+  --accent:#0369a1;
+  --accent-2:#0ea5e9;
+  --bg:#f5f8fc;
+  --surface:#ffffff;
+  --ink:#20304a;
+  --body:#4b5870;
+  --muted:#64718a;
+  --line:#e2e8f2;
+  --tint:#eef3fb;
+  --tint:color-mix(in srgb, var(--accent) 8%, #ffffff);
+  --tint-strong:#e5edfa;
+  --tint-strong:color-mix(in srgb, var(--accent) 14%, #ffffff);
+  --shadow:0 18px 45px rgba(32,48,74,.10);
+  --shadow-soft:0 8px 24px rgba(32,48,74,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  margin:0;
+  color:var(--body);
+  background:radial-gradient(900px 420px at 100% -8%, color-mix(in srgb, var(--accent-2) 12%, #ffffff) 0%, rgba(255,255,255,0) 70%), var(--bg);
+  font-family:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{display:block;max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,select{font:inherit}
+[hidden]{display:none !important}
+::selection{background:color-mix(in srgb, var(--accent) 22%, #ffffff);color:var(--ink)}
+:focus-visible{outline:2px solid color-mix(in srgb, var(--accent) 55%, #ffffff);outline-offset:3px}
+.wrap{width:min(1120px, calc(100% - 40px));margin:0 auto}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.topbar-inner{display:flex;align-items:center;gap:18px;height:70px}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:16px;font-weight:750;letter-spacing:-.015em;white-space:nowrap}
+.brand:hover{text-decoration:none}
+.brand img{width:32px;height:32px;border-radius:9px;background:#fff;border:1px solid var(--line)}
+.nav-links{display:flex;align-items:center;gap:20px;margin-left:auto;font-size:13.5px;font-weight:650}
+.nav-links a{color:var(--muted)}
+.nav-links a:hover{color:var(--accent);text-decoration:none}
+.top-actions{display:flex;align-items:center;gap:9px;margin-left:auto}
+.nav-links + .top-actions{margin-left:0}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+.icon-btn:hover{color:var(--accent);border-color:color-mix(in srgb, var(--accent) 26%, var(--line));text-decoration:none}
+.lang{
+  appearance:none;-webkit-appearance:none;
+  border:1px solid var(--line);
+  background-color:#fff;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364718a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  background-size:12px;
+  color:var(--ink);
+  border-radius:10px;
+  padding:9px 32px 9px 11px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  max-width:150px;
+}
+.lang:hover{border-color:color-mix(in srgb, var(--accent) 26%, var(--line))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid transparent;font-weight:700;font-size:14.5px;line-height:1.2;transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 12px 26px color-mix(in srgb, var(--accent) 26%, transparent)}
+.btn-primary:hover{background:color-mix(in srgb, var(--accent) 90%, var(--ink));box-shadow:0 15px 30px color-mix(in srgb, var(--accent) 30%, transparent)}
+.btn-secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-secondary:hover{border-color:color-mix(in srgb, var(--accent) 28%, var(--line))}
+.btn-quiet{background:transparent;color:var(--muted);padding:0 8px}
+.btn-quiet:hover{color:var(--accent)}
+.site-footer{margin-top:48px;border-top:1px solid var(--line);background:rgba(255,255,255,.8);padding:32px 0}
+.footer-inner{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center;justify-content:space-between}
+.footer-brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:14px;font-weight:700}
+.footer-brand img{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.footer-brand .copy{display:block;color:var(--muted);font-size:12px;font-weight:500;line-height:1.4;margin-top:1px}
+.footer-links{display:flex;flex-wrap:wrap;gap:9px 18px;align-items:center;font-size:13px;font-weight:600}
+.footer-links a{color:var(--muted)}
+.footer-links a:hover{color:var(--accent);text-decoration:none}
+@media (max-width:900px){
+  .nav-links{display:none}
+  .topbar-inner{height:62px}
+  .wrap{width:calc(100% - 32px)}
+}
+@media (max-width:560px){
+  .brand span{display:none}
+  .lang{max-width:124px}
+  .site-footer{padding:26px 0}
+  .footer-inner{align-items:flex-start;flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: #f0f2f5;
-      color: #333;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-      max-width: 820px;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    /* ── Header banner ── */
-    .banner {
-      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-      padding: 36px 40px 32px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .banner-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      flex-shrink: 0;
-      backdrop-filter: blur(4px);
-    }
-    .banner-text h1 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .banner-text p {
-      font-size: 14px;
-      opacity: 0.85;
-      line-height: 1.5;
-    }
-
-    /* ── Body two-column ── */
-    .body {
-      display: flex;
-      gap: 0;
-    }
-
-    .col {
-      flex: 1;
-      padding: 28px 36px;
-    }
-    .col-left {
-      border-right: 1px solid #eee;
-    }
-
-    .col h2 {
-      font-size: 15px;
-      font-weight: 600;
-      color: #10b981;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .feature-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .feature-list li {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #444;
-      padding-left: 22px;
-      position: relative;
-    }
-    .feature-list li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      opacity: 0.5;
-    }
-
-    .thank-text {
-      font-size: 14px;
-      line-height: 1.8;
-      color: #555;
-    }
-    .thank-text p + p {
-      margin-top: 12px;
-    }
-    .thank-text .heart {
-      color: #e74c3c;
-    }
-
-    /* ── CTA ── */
-    .cta {
-      text-align: center;
-      padding: 28px 36px 36px;
-      border-top: 1px solid #eee;
-    }
-    .cta p {
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 12px;
-    }
-    .cta .disclaimer {
-      font-size: 12px;
-      color: #aaa;
-      margin-bottom: 16px;
-      font-style: italic;
-    }
-
-    .kofi-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 36px;
-      background: #10b981;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 10px;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
-    }
-    .kofi-btn:hover {
-      background: #059669;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-    }
-    .kofi-btn:active {
-      transform: translateY(0);
-    }
-    .kofi-btn .btn-icon {
-      width: 28px;
-      height: 28px;
-      flex-shrink: 0;
-    }
-
-    /* ── Footer ── */
-    .footer {
-      text-align: center;
-      padding: 16px 36px 20px;
-      font-size: 12px;
-      color: #aaa;
-    }
-    .footer a {
-      color: #10b981;
-      text-decoration: none;
-    }
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 640px) {
-      body { padding: 12px; }
-      .banner { padding: 24px 20px; flex-direction: column; text-align: center; }
-      .body { flex-direction: column; }
-      .col-left { border-right: none; border-bottom: 1px solid #eee; }
-      .col { padding: 24px 20px; }
-      .screenshot { padding: 20px 20px 0; }
-      .screenshot img { max-width: 220px; }
-      .cta { padding: 24px 20px 28px; }
-    }
-  </style>
+.hero{position:relative;overflow:hidden;padding:66px 0 44px}
+.hero::before{content:"";position:absolute;right:-160px;top:-220px;width:780px;height:780px;border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--accent-2) 20%, rgba(255,255,255,0)) 0%, rgba(255,255,255,0) 68%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);gap:54px;align-items:center}
+.hero-copy{min-width:0}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid color-mix(in srgb, var(--accent) 22%, var(--line));background:color-mix(in srgb, var(--accent) 7%, #ffffff);color:var(--accent);font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.hero h1{margin:16px 0 14px;color:var(--ink);font-size:clamp(36px,4.9vw,58px);line-height:1.04;letter-spacing:-.04em;font-weight:800;overflow-wrap:anywhere}
+.tagline{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px}
+.tagline span{padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.8);color:var(--muted);font-size:12.5px;font-weight:650}
+.lead{max-width:680px;margin:0 0 22px;color:var(--body);font-size:17px;line-height:1.72}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:12.5px;font-weight:650}
+.badge svg{color:var(--accent)}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.micro{margin:16px 0 0;color:var(--muted);font-size:12.5px;font-weight:550}
+.app-card{position:relative;overflow:hidden;padding:32px 28px 24px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(160deg,#ffffff 0%, color-mix(in srgb, var(--accent) 7%, #ffffff) 100%);box-shadow:var(--shadow);text-align:center}
+.app-card-glow{position:absolute;width:220px;height:220px;left:50%;top:-120px;transform:translateX(-50%);border-radius:50%;background:color-mix(in srgb, var(--accent-2) 20%, rgba(255,255,255,0));filter:blur(8px)}
+.app-icon{position:relative;width:108px;height:108px;margin:6px auto 18px;padding:11px;border-radius:26px;background:#fff;border:1px solid var(--line);box-shadow:0 16px 30px rgba(32,48,74,.14)}
+.app-icon img{width:100%;height:100%;object-fit:contain;border-radius:18px}
+.app-name{position:relative;color:var(--ink);font-size:23px;font-weight:800;letter-spacing:-.02em}
+.app-sub{position:relative;margin:4px 0 20px;color:var(--muted);font-size:12.5px;font-weight:600}
+.app-points{position:relative;display:grid;gap:8px;text-align:left}
+.app-points div{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.72);color:var(--body);font-size:13px;line-height:1.45}
+.app-points svg{flex:none;margin-top:2px;color:var(--accent)}
+.app-footer{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:650}
+.app-footer svg{color:var(--accent)}
+.block{padding:56px 0}
+.section-head{max-width:720px;margin:0 0 26px}
+.kicker{margin:0 0 9px;color:var(--accent);font-size:11.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.section-head h2,.support-copy h2{margin:0 0 10px;color:var(--ink);font-size:clamp(27px,3.2vw,37px);line-height:1.15;letter-spacing:-.025em;font-weight:800}
+.section-head p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.65}
+.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.feature{padding:21px 21px 23px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease}
+.feature:hover{transform:translateY(-2px);border-color:color-mix(in srgb, var(--accent) 22%, var(--line));box-shadow:0 14px 32px rgba(32,48,74,.09)}
+.feature .num{display:inline-flex;align-items:center;justify-content:center;width:33px;height:33px;margin-bottom:13px;border-radius:10px;background:var(--tint);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.04em}
+.feature p{margin:0;color:var(--body);font-size:14px;line-height:1.66}
+.more-panel{margin-top:15px;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft)}
+.more-panel h3{margin:0 0 13px;color:var(--ink);font-size:13.5px;font-weight:750}
+.more-list{display:grid;grid-template-columns:1fr 1fr;gap:9px 28px;margin:0;padding:0;list-style:none}
+.more-list li{position:relative;padding-left:19px;color:var(--body);font-size:13.5px;line-height:1.55}
+.more-list li::before{content:"";position:absolute;left:1px;top:.6em;width:7px;height:7px;border-radius:2px;background:var(--accent-2)}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.plan{padding:26px 27px;border:1px solid var(--line);border-radius:21px;background:#fff;box-shadow:var(--shadow-soft)}
+.plan.premium{border-color:color-mix(in srgb, var(--accent) 25%, var(--line));background:linear-gradient(160deg,#ffffff 0%, color-mix(in srgb, var(--accent) 8%, #ffffff) 100%);box-shadow:var(--shadow)}
+.plan-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.plan-top h3{margin:0;color:var(--ink);font-size:20px;font-weight:780;letter-spacing:-.02em}
+.plan-mark{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9px}
+.plan-mark.free{background:var(--tint);color:var(--accent)}
+.plan-mark.premium{background:var(--accent);color:#fff}
+.plan p{margin:0;color:var(--body);font-size:14.5px;line-height:1.72}
+.plan-note{margin-top:15px;padding:14px 17px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:13px;background:var(--tint);color:var(--body);font-size:13px;line-height:1.65}
+.privacy-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:34px;align-items:center;padding:42px 44px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:28px;background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, #ffffff) 0%, #ffffff 62%, color-mix(in srgb, var(--accent-2) 12%, #ffffff) 100%);box-shadow:var(--shadow)}
+.panel-icon{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;margin-bottom:15px;border-radius:14px;background:#fff;border:1px solid var(--line);color:var(--accent);box-shadow:var(--shadow-soft)}
+.privacy-panel h2{margin:0 0 10px;color:var(--ink);font-size:clamp(26px,3vw,35px);line-height:1.15;letter-spacing:-.025em;font-weight:800}
+.panel-lead{max-width:620px;margin:0 0 18px;color:var(--body);font-size:15px;line-height:1.7}
+.points{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.point{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.78);color:var(--ink);font-size:12.5px;font-weight:650}
+.point svg{color:var(--accent)}
+.text-link{display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-size:13.5px;font-weight:750}
+.text-link:hover{text-decoration:none;gap:10px}
+.privacy-visual{position:relative;min-height:250px;display:grid;place-items:center}
+.ring{position:absolute;border-radius:50%;border:1px solid color-mix(in srgb, var(--accent) 20%, #ffffff)}
+.ring.one{width:190px;height:190px}
+.ring.two{width:260px;height:260px;opacity:.58}
+.ring.three{width:320px;height:320px;opacity:.32}
+.lock-badge{position:relative;display:grid;place-items:center;width:88px;height:88px;border-radius:26px;background:#fff;border:1px solid var(--line);color:var(--accent);box-shadow:var(--shadow)}
+.lock-badge svg{width:36px;height:36px}
+.support-card{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:34px;align-items:center;padding:40px 44px;border:1px solid var(--line);border-radius:28px;background:#fff;box-shadow:var(--shadow-soft)}
+.support-copy .kicker{margin-bottom:10px}
+.support-copy p{max-width:640px;margin:0 0 12px;color:var(--body);font-size:14.5px;line-height:1.75}
+.support-copy p:last-of-type{margin-bottom:16px}
+.disclaimer{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+.kofi{display:flex;flex-direction:column;align-items:center;gap:12px;padding:26px 22px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:20px;background:linear-gradient(160deg, color-mix(in srgb, var(--accent) 7%, #ffffff) 0%, #ffffff 100%);text-align:center}
+.kofi-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#fff;border:1px solid var(--line);color:var(--accent);box-shadow:var(--shadow-soft)}
+.kofi p{margin:0;color:var(--body);font-size:13px;line-height:1.6}
+.kofi-btn{width:100%}
+.kofi-note{margin:0;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+@media (max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:38px}
+  .app-card{max-width:460px;margin:0 auto;width:100%}
+  .feature-grid{grid-template-columns:1fr 1fr}
+  .privacy-panel,.support-card{grid-template-columns:1fr;gap:26px}
+  .privacy-visual{min-height:210px}
+}
+@media (max-width:760px){
+  .hero{padding:44px 0 30px}
+  .hero h1{font-size:clamp(33px,9vw,46px)}
+  .lead{font-size:16px}
+  .block{padding:42px 0}
+  .feature-grid{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr}
+  .more-list{grid-template-columns:1fr}
+  .privacy-panel,.support-card{padding:28px 22px;border-radius:22px}
+  .privacy-visual{display:none}
+  .cta-row .btn{flex:1 1 auto}
+}
+</style>
 </head>
 <body>
-  <div class="card">
-    <!-- Banner -->
-    <div class="banner">
-      <div class="banner-icon">🔄</div>
-      <div class="banner-text">
-        <h1>RefreshMate</h1>
-        <p data-i18n="tagline"></p>
-      </div>
-    </div>
-
-    <!-- Body: two columns -->
-    <div class="body">
-      <!-- Left: features -->
-      <div class="col col-left">
-        <h2 data-i18n="featuresTitle"></h2>
-        <ul class="feature-list" id="featureList"></ul>
-      </div>
-
-      <!-- Right: thank you -->
-      <div class="col">
-        <h2 data-i18n="thankTitle"></h2>
-        <div class="thank-text" id="thankText"></div>
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta">
-      <p class="disclaimer" data-i18n="disclaimer"></p>
-      <p data-i18n="ctaHint"></p>
-      <a class="kofi-btn" href="https://ko-fi.com/annmax?buyACoffee=true&ref=refreshmate" target="_blank" rel="noopener">
-        <svg class="btn-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
-          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
-          <line x1="6" y1="1" x2="6" y2="4"/>
-          <line x1="10" y1="1" x2="10" y2="4"/>
-          <line x1="14" y1="1" x2="14" y2="4"/>
-        </svg>
-        <span data-i18n="btnText"></span>
-      </a>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-      <a href="https://github.com/annmax1983/RefreshMate" target="_blank" rel="noopener">GitHub</a>
-      &nbsp;·&nbsp;
-      <a href="privacy-policy.html" target="_blank" rel="noopener" data-i18n="privacyPolicy">Privacy Policy</a>
-      &nbsp;·&nbsp; Copyright © 2026 RefreshMate
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html"><img src="icons/icon128.png" alt="" width="32" height="32"><span>RefreshMate</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#features" id="i-nav-features">Features</a>
+      <a href="#plans" id="i-nav-plans">Free &amp; Premium</a>
+      <a href="#privacy" id="i-nav-privacy">Privacy</a>
+      <a href="#support" id="i-nav-support">Support</a>
+    </nav>
+    <div class="top-actions">
+      <select class="lang" id="i-lang" aria-label="Language"><option value="en">English</option><option value="zh">简体中文</option><option value="ja">日本語</option><option value="de">Deutsch</option><option value="es">Español</option><option value="fr">Français</option></select>
+      <a class="icon-btn" href="https://github.com/annmax1983/RefreshMate" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.05-.01-1.9-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.4 9.4 0 0 1 12 5.96c.85 0 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg></a>
     </div>
   </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow" id="i-eyebrow">Chrome &amp; Edge extension</span>
+        <h1 id="i-h1">Auto refresh pages</h1>
+        <div class="tagline" id="i-tagline"><span>Keyword monitoring</span><span>Random intervals</span><span>Fully local</span></div>
+        <p class="lead" id="i-intro">RefreshMate is an auto refresh extension for Chrome and Edge that reloads a page on a schedule you choose, from a few seconds to several hours. Set an interval, start it and let the page stay current while you work on something else. A small overlay shows the countdown, refresh progress and a pause button, and the toolbar badge keeps the timer visible when the overlay is hidden. No account, no ads and no tracking. Built for dashboards, queues, listings and any page that only updates when you reload it.</p>
+        <div class="badges" id="i-badges"><span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg>Runs locally</span><span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 9 4.5 9 7a11.7 11.7 0 0 1-2.3 3.6"/><path d="M6.2 6.2C4.2 7.7 3 9.7 3 12c0 2.5 4 7 9 7a11 11 0 0 0 4.2-.8"/></svg>No tracking</span><span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>Chrome &amp; Edge</span></div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://annmax1983.com/extensions/refreshmate" target="_blank" rel="noopener"><span id="i-get-label">Get the extension</span><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-secondary" href="privacy-policy.html"><span id="i-privacy-label">Privacy policy</span></a>
+          <a class="btn btn-quiet" href="https://github.com/annmax1983/RefreshMate" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.05-.01-1.9-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.4 9.4 0 0 1 12 5.96c.85 0 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg><span id="i-source-label">View source</span></a>
+        </div>
+        <p class="micro" id="i-micro">Free + Premium · Chrome &amp; Edge</p>
+      </div>
+      <aside class="app-card" aria-label="RefreshMate">
+        <div class="app-card-glow" aria-hidden="true"></div>
+        <div class="app-icon"><img src="icons/icon128.png" alt="RefreshMate icon" width="108" height="108"></div>
+        <div class="app-name" id="i-app-name">RefreshMate</div>
+        <div class="app-sub" id="i-app-sub">Free + Premium</div>
+        <div class="app-points" id="i-app-points"><div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Local processing</span></div><div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>No account</span></div><div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Optional licence</span></div></div>
+        <div class="app-footer"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg><span id="i-app-browsers">Chrome &amp; Edge</span></div>
+      </aside>
+    </div>
+  </section>
 
-  <script>
-    // ============================================================
-    //  i18n — 6 languages
-    // ============================================================
-    const I18N = {
-      zh: {
-        tagline: '自动刷新页面 · 关键词监控 · 随机间隔 · 完全本地',
-        featuresTitle: '✨ 功能特色',
-        features: [
-          '自定义刷新间隔，5秒到数小时自由设置',
-          '随机刷新间隔，防止网站检测和封禁',
-          '关键词监控，页面出现/消失时自动提醒',
-          'CAPTCHA检测，遇到验证码自动暂停',
-          '浮动倒计时，实时显示下次刷新时间',
-          '输入框自动暂停，打字时不打扰你'
-        ],
-        thankTitle: '💌 想对你说',
-        thank: [
-          '感谢你使用 RefreshMate。这个小工具的诞生，只是因为我自己需要监控一些页面的变化。',
-          '如果它也帮到了你，那对我来说就是最好的回报。',
-          '如果你愿意请我喝一杯咖啡 <span class="heart">☕</span>，我会非常开心。'
-        ],
-        disclaimer: 'Ko-fi 仅为自愿赞助，不会影响任何功能使用，赞助与扩展功能无任何绑定，仅为用户自发支持。',
-        ctaHint: '点击下方按钮，跳转到 Ko-fi 支持页面',
-        btnText: '请我喝杯咖啡',
-        privacyPolicy: '隐私政策'
-      },
-      en: {
-        tagline: 'Auto refresh pages · Keyword monitoring · Random intervals · Fully local',
-        featuresTitle: '✨ Features',
-        features: [
-          'Custom refresh intervals from 5 seconds to hours',
-          'Random intervals to avoid detection and bans',
-          'Keyword alerts when text appears or disappears',
-          'CAPTCHA detection — auto-pauses on verification',
-          'Floating countdown overlay on the page',
-          'Auto-pause when typing in input fields'
-        ],
-        thankTitle: '💌 A Note to You',
-        thank: [
-          'Thank you for using RefreshMate. This little tool was born because I needed to monitor page changes.',
-          'If it helps you too, that\'s already the best reward I could ask for.',
-          'If you\'d like to <span class="heart">☕</span> buy me a coffee, I\'d really appreciate it.'
-        ],
-        disclaimer: 'Ko-fi sponsorship is purely voluntary and does not affect any features. Sponsorship has no binding to extension functionality — it is solely user-initiated support.',
-        ctaHint: 'Click the button below to visit the Ko-fi support page',
-        btnText: 'Buy Me a Coffee',
-        privacyPolicy: 'Privacy Policy'
-      },
-      ja: {
-        tagline: '自動ページ更新 · キーワード監視 · ランダム間隔 · 完全ローカル',
-        featuresTitle: '✨ 機能紹介',
-        features: [
-          '5秒から数時間のカスタム更新間隔',
-          '検出・ブロックを防ぐランダム間隔',
-          'テキストの出現/消失時にキーワードアラート',
-          'CAPTCHA検出 — 認証時に自動一時停止',
-          'ページ上のフローティングカウントダウン',
-          '入力フィールドでタイピング時に自動一時停止'
-        ],
-        thankTitle: '💌 ご利用ありがとうございます',
-        thank: [
-          'RefreshMateをご利用いただきありがとうございます。このツールは、ページの変更を監視する必要があるから生まれました。',
-          'もし皆様の役に立てているなら、それが何よりの喜びです。',
-          'もしよろしければ、コーヒーを <span class="heart">☕</span> 一杯おごっていただけると、とても嬉しいです。'
-        ],
-        disclaimer: 'Ko-fi は純粋な任意のサポートです。機能に一切影響せず、サポートと拡張機能は無関係です。ユーザーの自発的な支援のみです。',
-        ctaHint: '下のボタンをクリックすると Ko-fi サポートページに移動します',
-        btnText: 'Buy Me a Coffee',
-        privacyPolicy: 'プライバシーポリシー'
-      },
-      de: {
-        tagline: 'Seiten automatisch aktualisieren · Keyword-Überwachung · Zufallsintervalle · Vollständig lokal',
-        featuresTitle: '✨ Funktionen',
-        features: [
-          'Benutzerdefinierte Aktualisierungsintervalle von 5 Sekunden bis Stunden',
-          'Zufallsintervalle zur Vermeidung von Erkennung und Sperrung',
-          'Keyword-Alarme bei Text-Erscheinen oder Verschwinden',
-          'CAPTCHA-Erkennung — pausiert automatisch bei Verifizierung',
-          'Schwebender Countdown-Overlay auf der Seite',
-          'Automatische Pause bei Eingabe in Textfeldern'
-        ],
-        thankTitle: '💌 Ein paar Worte an Sie',
-        thank: [
-          'Vielen Dank, dass Sie RefreshMate nutzen. Dieses kleine Tool entstand, weil ich Seitenänderungen überwachen musste.',
-          'Wenn es auch Ihnen hilft, ist das die beste Belohnung.',
-          'Wenn Sie mir gerne einen <span class="heart">☕</span> Kaffee ausgeben möchten, würde mich das sehr freuen.'
-        ],
-        disclaimer: 'Ko-fi-Sponsoring ist rein freiwillig und beeinträchtigt keine Funktionen. Das Sponsoring hat keinen Einfluss auf die Erweiterungsfunktionen — es ist ausschließlich eine freiwillige Unterstützung durch die Nutzer.',
-        ctaHint: 'Klicken Sie auf die Schaltfläche unten, um zur Ko-fi-Support-Seite zu gelangen',
-        btnText: 'Buy Me a Coffee',
-        privacyPolicy: 'Datenschutzrichtlinie'
-      },
-      es: {
-        tagline: 'Actualiza páginas automáticamente · Monitoreo de palabras clave · Intervalos aleatorios · Totalmente local',
-        featuresTitle: '✨ Características',
-        features: [
-          'Intervalos de actualización personalizados de 5 segundos a horas',
-          'Intervalos aleatorios para evitar detección y bloqueos',
-          'Alertas de palabras clave cuando el texto aparece o desaparece',
-          'Detección de CAPTCHA — pausa automática en verificación',
-          'Contador regresivo flotante en la página',
-          'Pausa automática al escribir en campos de entrada'
-        ],
-        thankTitle: '💌 Unas palabras para ti',
-        thank: [
-          'Gracias por usar RefreshMate. Esta pequeña herramienta nació porque necesitaba monitorear cambios en páginas.',
-          'Si también te ayuda, esa ya es la mejor recompensa.',
-          'Si quieres invitarme a un <span class="heart">☕</span> café, me haría muy feliz.'
-        ],
-        disclaimer: 'El patrocinio en Ko-fi es puramente voluntario y no afecta ninguna funcionalidad. El patrocinio no tiene vinculación con las funciones de la extensión — es únicamente apoyo iniciado por el usuario.',
-        ctaHint: 'Haz clic en el botón de abajo para visitar la página de soporte de Ko-fi',
-        btnText: 'Buy Me a Coffee',
-        privacyPolicy: 'Política de Privacidad'
-      },
-      fr: {
-        tagline: 'Actualisation automatique · Surveillance de mots-clés · Intervalles aléatoires · Entièrement local',
-        featuresTitle: '✨ Fonctionnalités',
-        features: [
-          'Intervalles d\'actualisation personnalisés de 5 secondes à plusieurs heures',
-          'Intervalles aléatoires pour éviter la détection et les blocages',
-          'Alertes de mots-clés quand le texte apparaît ou disparaît',
-          'Détection CAPTCHA — mise en pause automatique lors de la vérification',
-          'Compte à rebours flottant sur la page',
-          'Mise en pause automatique lors de la saisie dans les champs'
-        ],
-        thankTitle: '💌 Un petit mot pour vous',
-        thank: [
-          'Merci d\'utiliser RefreshMate. Cet outil est né parce que je devais surveiller les changements de pages.',
-          'S\'il vous aide aussi, c\'est déjà la plus belle récompense.',
-          'Si vous souhaitez m\'offrir un <span class="heart">☕</span> café, cela me ferait très plaisir.'
-        ],
-        disclaimer: 'Le parrainage sur Ko-fi est purement volontaire et n\'affecte aucune fonctionnalité. Le parrainage n\'est lié à aucune fonctionnalité de l\'extension — il s\'agit uniquement d\'un soutien initié par l\'utilisateur.',
-        ctaHint: 'Cliquez sur le bouton ci-dessous pour accéder à la page de soutien Ko-fi',
-        btnText: 'Buy Me a Coffee',
-        privacyPolicy: 'Politique de Confidentialité'
+  <section class="block" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">01</p>
+        <h2 id="i-feat-title">Everything it does</h2>
+        <p id="i-feat-lead">The core features at a glance.</p>
+      </div>
+      <div class="feature-grid" id="i-features">
+<article class="feature"><span class="num">01</span><p>Presets for 5 seconds, 30 seconds, 1 minute and 5 minutes, plus a custom interval in minutes and seconds.</p></article>
+<article class="feature"><span class="num">02</span><p>Hard refresh bypasses the cache when a page keeps serving an old copy.</p></article>
+<article class="feature"><span class="num">03</span><p>A floating overlay shows the countdown, progress and a pause or resume control.</p></article>
+<article class="feature"><span class="num">04</span><p>The toolbar badge shows the time to the next refresh.</p></article>
+<article class="feature"><span class="num">05</span><p>Auto-pause while you type in an input field, so forms are not wiped mid-entry.</p></article>
+<article class="feature"><span class="num">06</span><p>CAPTCHA detection stops the refresh and tells you why; resume when you are ready.</p></article>
+      </div>
+      <div class="more-panel" id="i-more-panel">
+        <h3 id="i-more-title">Also included</h3>
+        <ul class="more-list" id="i-more"><li>A maximum refresh count stops the loop after the number you set; leave it empty for unlimited.</li>
+<li>Scroll position is restored after each reload.</li>
+<li>Per-site settings: every domain keeps its own interval, hard-refresh choice and limits.</li>
+<li>Six interface languages.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="plans">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">02</p>
+        <h2 id="i-plan-title">Free vs Premium</h2>
+        <p id="i-plan-lead">The free tier is a complete tool, not a trial. Premium is optional.</p>
+      </div>
+      <div class="plans" id="i-plans">
+        <article class="plan"><div class="plan-top"><span class="plan-mark free"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Free</h3></div><p>presets from 5 seconds to 5 minutes, custom intervals, hard refresh, the floating overlay with countdown, progress and pause, auto-pause while typing, CAPTCHA detection, maximum refresh count, scroll restore, per-site settings, the toolbar badge and all six interface languages. One site runs at a time, and one matching tab is reloaded per cycle.</p></article>
+        <article class="plan premium"><div class="plan-top"><span class="plan-mark premium"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Premium</h3></div><p>several sites and every matching tab at once, random interval ranges, keyword and regular expression alerts, any-change detection, notification sounds and the choice to continue after an alert. One licence key activates on two browsers, and removing the licence from one browser frees that slot again.</p></article>
+      </div>
+      <div class="plan-note" id="i-plan-note">The licence is optional. RefreshMate keeps working offline and asks the licence server for a check about every two hours; if the check fails, nothing is locked.</div>
+    </div>
+  </section>
+
+  <section class="block" id="privacy">
+    <div class="wrap">
+      <div class="privacy-panel">
+        <div>
+          <span class="panel-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
+          <h2 id="i-priv-title">Private by design</h2>
+          <p class="panel-lead" id="i-priv-lead">Your data stays on your device. No account, no analytics, no tracking. Read exactly what is stored and when the extension uses the network.</p>
+          <div class="points" id="i-priv-points"><span class="point"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Local processing</span><span class="point"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No account</span><span class="point"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Optional licence</span></div>
+          <a class="text-link" href="privacy-policy.html"><span id="i-priv-cta">Read the privacy policy</span><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="privacy-visual" aria-hidden="true">
+          <span class="ring one"></span><span class="ring two"></span><span class="ring three"></span>
+          <span class="lock-badge"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="support">
+    <div class="wrap">
+      <div class="support-card">
+        <div class="support-copy">
+          <p class="kicker" id="i-support-eyebrow">Support the developer</p>
+          <h2 id="i-support-title">💌 A Note to You</h2>
+          <div id="i-support-copy"><p>Thank you for using RefreshMate. This little tool was born because I needed to monitor page changes.</p><p>If it helps you too, that's already the best reward I could ask for.</p><p>If you'd like to <span class="heart">☕</span> buy me a coffee, I'd really appreciate it.</p></div>
+          <p class="disclaimer" id="i-support-disclaimer">Ko-fi sponsorship is purely voluntary and does not affect any features. Sponsorship has no binding to extension functionality — it is solely user-initiated support.</p>
+        </div>
+        <div class="kofi">
+          <div class="kofi-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M7 4v2M11 4v2"/></svg></div>
+          <p id="i-support-hint">Click the button below to visit the Ko-fi support page</p>
+          <a class="btn btn-primary kofi-btn" href="https://ko-fi.com/annmax?buyACoffee=true&ref=refreshmate" target="_blank" rel="noopener"><span id="i-support-btn-label">Buy Me a Coffee</span></a>
+          <p class="kofi-note">Ko-fi</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img src="icons/icon128.png" alt="" width="30" height="30">
+      <div>RefreshMate<span class="copy" id="i-footer-copy">© 2026 RefreshMate</span></div>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://annmax1983.com/extensions.html" target="_blank" rel="noopener" id="i-footer-more">More extensions</a>
+      <a href="privacy-policy.html" id="i-footer-privacy">Privacy</a>
+      <a href="https://github.com/annmax1983/RefreshMate" target="_blank" rel="noopener" id="i-footer-github">GitHub</a>
+      <a href="https://annmax1983.com/extensions/refreshmate" target="_blank" rel="noopener" id="i-footer-site">Website</a>
+      <a href="mailto:support@annmax1983.com">support@annmax1983.com</a>
+    </nav>
+  </div>
+</footer>
+<script>
+const MODEL = {"name":"RefreshMate","icon":"icons/icon128.png","github":"https://github.com/annmax1983/RefreshMate","site":"https://annmax1983.com/extensions/refreshmate","support":"https://ko-fi.com/annmax?buyACoffee=true&ref=refreshmate","slug":"refreshmate","langs":{"en":{"tagline":"Auto refresh pages · Keyword monitoring · Random intervals · Fully local","intro":"RefreshMate is an auto refresh extension for Chrome and Edge that reloads a page on a schedule you choose, from a few seconds to several hours. Set an interval, start it and let the page stay current while you work on something else. A small overlay shows the countdown, refresh progress and a pause button, and the toolbar badge keeps the timer visible when the overlay is hidden. No account, no ads and no tracking. Built for dashboards, queues, listings and any page that only updates when you reload it.","why":["Presets for 5 seconds, 30 seconds, 1 minute and 5 minutes, plus a custom interval in minutes and seconds.","Hard refresh bypasses the cache when a page keeps serving an old copy.","A floating overlay shows the countdown, progress and a pause or resume control.","The toolbar badge shows the time to the next refresh.","Auto-pause while you type in an input field, so forms are not wiped mid-entry.","CAPTCHA detection stops the refresh and tells you why; resume when you are ready.","A maximum refresh count stops the loop after the number you set; leave it empty for unlimited.","Scroll position is restored after each reload.","Per-site settings: every domain keeps its own interval, hard-refresh choice and limits.","Six interface languages."],"plan":{"free":"Free, permanently: presets from 5 seconds to 5 minutes, custom intervals, hard refresh, the floating overlay with countdown, progress and pause, auto-pause while typing, CAPTCHA detection, maximum refresh count, scroll restore, per-site settings, the toolbar badge and all six interface languages. One site runs at a time, and one matching tab is reloaded per cycle.","premium":"Premium (optional licence): several sites and every matching tab at once, random interval ranges, keyword and regular expression alerts, any-change detection, notification sounds and the choice to continue after an alert. One licence key activates on two browsers, and removing the licence from one browser frees that slot again.","note":"The licence is optional. RefreshMate keeps working offline and asks the licence server for a check about every two hours; if the check fails, nothing is locked."},"thankTitle":"💌 A Note to You","thank":["Thank you for using RefreshMate. This little tool was born because I needed to monitor page changes.","If it helps you too, that's already the best reward I could ask for.","If you'd like to \u003cspan class=\"heart\"\u003e☕\u003c/span\u003e buy me a coffee, I'd really appreciate it."],"disclaimer":"Ko-fi sponsorship is purely voluntary and does not affect any features. Sponsorship has no binding to extension functionality — it is solely user-initiated support.","ctaHint":"Click the button below to visit the Ko-fi support page","btnText":"Buy Me a Coffee","ui":{"navFeatures":"Features","navPlans":"Free & Premium","navPrivacy":"Privacy","navSupport":"Support","eyebrow":"Chrome & Edge extension","badgeFree":"Free + Premium","badgeLocal":"Runs locally","badgeNoTrack":"No tracking","badgeBrowsers":"Chrome & Edge","ctaGet":"Get the extension","ctaPrivacy":"Privacy policy","ctaSource":"View source","featuresTitle":"Everything it does","featuresLead":"The core features at a glance.","moreTitle":"Also included","proLabel":"Premium","freeLabel":"Free","premiumLabel":"Premium","planTitle":"Free vs Premium","planLead":"The free tier is a complete tool, not a trial. Premium is optional.","privacyTitle":"Private by design","privacyLead":"Your data stays on your device. No account, no analytics, no tracking. Read exactly what is stored and when the extension uses the network.","privacyPoints":["Local processing","No account","Optional licence"],"privacyCta":"Read the privacy policy","supportEyebrow":"Support the developer","supportHint":"If this extension helps you, you can buy me a coffee.","footerMore":"More extensions","footerPrivacy":"Privacy","footerGithub":"GitHub","footerSite":"Website"}},"zh":{"tagline":"自动刷新页面 · 关键词监控 · 随机间隔 · 完全本地","intro":"RefreshMate 是一款适用于 Chrome 和 Edge 的自动刷新扩展，可按你设定的时间间隔重新加载页面，从几秒到数小时都可以。设好间隔并启动，页面会在你忙别的事情时保持最新。页面上的小浮层显示倒计时、刷新进度和暂停按钮；浮层隐藏时，工具栏图标仍会显示剩余时间。无需账号，没有广告，也不做跟踪。适合盯着仪表板、排队页面、商品列表，以及任何只有刷新才会更新的页面。","why":["预设 5 秒、30 秒、1 分钟和 5 分钟，也可按分和秒自定义间隔。","页面持续返回旧内容时，强制刷新会绕过缓存。","浮动浮层显示倒计时、进度以及暂停或继续按钮。","工具栏图标显示距离下次刷新的时间。","在输入框中打字时自动暂停，避免填了一半的表单被清空。","检测到验证码时停止刷新并说明原因，准备好后可以继续。","设置刷新次数上限，到达后自动停止；留空则不限次数。","每次重新加载后恢复滚动位置。","按网站保存设置：每个域名都有自己的间隔、强制刷新选项和上限。","六种界面语言。"],"plan":{"free":"永久免费：5 秒到 5 分钟的预设、自定义间隔、强制刷新、带倒计时和进度及暂停按钮的浮动浮层、输入时自动暂停、验证码检测、刷新次数上限、滚动位置恢复、按网站保存设置、工具栏图标，以及六种界面语言。一次运行一个网站，每个周期只重新加载一个匹配的标签页。","premium":"高级版（可选许可证）：同时运行多个网站和每个匹配的标签页、随机间隔、关键词与正则表达式预警、任意变化检测、通知提示音，以及命中后继续的选择。一个许可证密钥可在两个浏览器上激活；从其中一个浏览器移除许可证，该名额会重新空出。","note":"许可证完全可选。RefreshMate 离线时照常工作，大约每两小时向授权服务器核对一次；核对失败也不会锁住任何功能。"},"thankTitle":"💌 想对你说","thank":["感谢你使用 RefreshMate。这个小工具的诞生，只是因为我自己需要监控一些页面的变化。","如果它也帮到了你，那对我来说就是最好的回报。","如果你愿意请我喝一杯咖啡 \u003cspan class=\"heart\"\u003e☕\u003c/span\u003e，我会非常开心。"],"disclaimer":"Ko-fi 仅为自愿赞助，不会影响任何功能使用，赞助与扩展功能无任何绑定，仅为用户自发支持。","ctaHint":"点击下方按钮，跳转到 Ko-fi 支持页面","btnText":"请我喝杯咖啡","ui":{"navFeatures":"功能","navPlans":"免费与高级版","navPrivacy":"隐私","navSupport":"支持","eyebrow":"Chrome 与 Edge 扩展","badgeFree":"免费 + 高级版","badgeLocal":"本地运行","badgeNoTrack":"无追踪","badgeBrowsers":"Chrome 与 Edge","ctaGet":"获取扩展","ctaPrivacy":"隐私政策","ctaSource":"查看源码","featuresTitle":"全部功能","featuresLead":"核心功能一览。","moreTitle":"还包括","proLabel":"高级版","freeLabel":"免费版","premiumLabel":"高级版","planTitle":"免费版与高级版","planLead":"免费版是完整工具，不是试用版。高级功能完全可选。","privacyTitle":"隐私优先","privacyLead":"你的数据留在设备上。无需账号，没有统计，没有追踪。了解具体存储了什么，以及扩展何时联网。","privacyPoints":["本地处理","无需账号","授权可选"],"privacyCta":"阅读隐私政策","supportEyebrow":"支持开发者","supportHint":"如果这个扩展对你有帮助，可以请我喝杯咖啡。","footerMore":"更多扩展","footerPrivacy":"隐私","footerGithub":"GitHub","footerSite":"官网"}},"ja":{"tagline":"自動ページ更新 · キーワード監視 · ランダム間隔 · 完全ローカル","intro":"RefreshMate は、数秒から数時間まで、選んだ間隔でページを再読み込みする Chrome と Edge 向けの自動更新拡張機能です。間隔を決めて開始すれば、別の作業をしている間にページが最新の状態に保たれます。ページ上の小さなオーバーレイにはカウントダウン、更新の進捗、一時停止ボタンが表示され、オーバーレイを隠してもツールバーのアイコンに残り時間が出ます。アカウント登録も広告もトラッキングもありません。ダッシュボード、待ち行列、商品一覧など、再読み込みしないと更新されないページに向いています。","why":["5 秒、30 秒、1 分、5 分のプリセットに加え、分と秒で自由に間隔を指定できます。","古い内容が返り続けるページでは、強制更新でキャッシュを回避できます。","フローティングオーバーレイにカウントダウン、進捗、一時停止・再開ボタンを表示します。","ツールバーのアイコンに次回更新までの時間を表示します。","入力欄に文字を打つと自動で一時停止し、入力途中のフォームが消えません。","CAPTCHA を検出すると更新を止めて理由を示し、準備ができたら再開できます。","更新回数の上限を設定すると、その回数で自動的に停止します。空欄なら無制限です。","再読み込みのたびにスクロール位置を復元します。","サイトごとの設定：ドメインごとに間隔、強制更新、上限を保存します。","6 言語のインターフェース。"],"plan":{"free":"永久無料：5 秒から 5 分までのプリセット、自由な間隔、強制更新、カウントダウン・進捗・一時停止付きのフローティングオーバーレイ、入力中の自動停止、CAPTCHA 検出、更新回数の上限、スクロール位置の復元、サイトごとの設定、ツールバーのアイコン、6 言語の画面。一度に 1 サイト、1 サイクルにつき一致するタブを 1 つだけ更新します。","premium":"PREMIUM（任意のライセンス）：複数サイトとすべての一致タブの同時更新、ランダム間隔、キーワードと正規表現の警告、あらゆる変化の検出、通知音、ヒット後に続ける選択。ライセンスキー 1 つで 2 つのブラウザを有効化でき、片方からライセンスを外すとその枠が再び空きます。","note":"ライセンスは任意です。RefreshMate はオフラインでも動作し、約 2 時間ごとにライセンスサーバーへ確認します。確認に失敗しても機能がロックされることはありません。"},"thankTitle":"💌 ご利用ありがとうございます","thank":["RefreshMateをご利用いただきありがとうございます。このツールは、ページの変更を監視する必要があるから生まれました。","もし皆様の役に立てているなら、それが何よりの喜びです。","もしよろしければ、コーヒーを \u003cspan class=\"heart\"\u003e☕\u003c/span\u003e 一杯おごっていただけると、とても嬉しいです。"],"disclaimer":"Ko-fi は純粋な任意のサポートです。機能に一切影響せず、サポートと拡張機能は無関係です。ユーザーの自発的な支援のみです。","ctaHint":"下のボタンをクリックすると Ko-fi サポートページに移動します","btnText":"Buy Me a Coffee","ui":{"navFeatures":"機能","navPlans":"無料とPremium","navPrivacy":"プライバシー","navSupport":"サポート","eyebrow":"Chrome & Edge 拡張機能","badgeFree":"無料 + Premium","badgeLocal":"端末上で動作","badgeNoTrack":"トラッキングなし","badgeBrowsers":"Chrome & Edge","ctaGet":"拡張機能を入手","ctaPrivacy":"プライバシーポリシー","ctaSource":"ソースを見る","featuresTitle":"すべての機能","featuresLead":"主な機能を一覧で。","moreTitle":"その他の機能","proLabel":"Premium","freeLabel":"無料版","premiumLabel":"Premium","planTitle":"無料版とPremium","planLead":"無料版は試用版ではなく、完成したツールです。Premium は任意です。","privacyTitle":"プライバシー優先","privacyLead":"データは端末上に残ります。アカウント、分析、トラッキングはありません。何が保存され、いつ通信するかを確認できます。","privacyPoints":["端末内で処理","アカウント不要","ライセンスは任意"],"privacyCta":"プライバシーポリシーを読む","supportEyebrow":"開発者を支援","supportHint":"この拡張機能が役に立ったら、コーヒーをごちそうしてください。","footerMore":"他の拡張機能","footerPrivacy":"プライバシー","footerGithub":"GitHub","footerSite":"公式サイト"}},"de":{"tagline":"Seiten automatisch aktualisieren · Keyword-Überwachung · Zufallsintervalle · Vollständig lokal","intro":"RefreshMate ist eine Auto-Refresh-Extension für Chrome und Edge, die eine Seite nach Ihrem Zeitplan neu lädt – von wenigen Sekunden bis zu mehreren Stunden. Legen Sie ein Intervall fest, starten Sie es, und die Seite bleibt aktuell, während Sie an etwas anderem arbeiten. Ein kleines Overlay zeigt den Countdown, den Fortschritt und eine Pause-Taste; das Symbol in der Symbolleiste hält den Timer sichtbar, wenn das Overlay ausgeblendet ist. Kein Konto, keine Werbung, kein Tracking. Gebaut für Dashboards, Warteschlangen, Angebotslisten und jede Seite, die sich nur beim Neuladen aktualisiert.","why":["Voreinstellungen für 5 Sekunden, 30 Sekunden, 1 Minute und 5 Minuten, dazu ein eigenes Intervall in Minuten und Sekunden.","Hard Refresh umgeht den Cache, wenn eine Seite hartnäckig eine alte Kopie ausliefert.","Ein schwebendes Overlay zeigt Countdown, Fortschritt und eine Pause- oder Fortsetzen-Steuerung.","Das Symbol in der Symbolleiste zeigt die Zeit bis zum nächsten Neuladen.","Automatische Pause, während Sie in ein Eingabefeld tippen, damit Formulare nicht mitten im Ausfüllen geleert werden.","Die CAPTCHA-Erkennung stoppt den Refresh und nennt den Grund; setzen Sie fort, wenn Sie bereit sind.","Eine maximale Anzahl an Neuladungen beendet die Schleife nach der eingestellten Zahl; leer lassen für unbegrenzt.","Die Scrollposition wird nach jedem Neuladen wiederhergestellt.","Einstellungen pro Website: Jede Domain behält ihr eigenes Intervall, ihre Hard-Refresh-Wahl und ihre Limits.","Sechs Oberflächensprachen."],"plan":{"free":"Kostenlos, dauerhaft: Voreinstellungen von 5 Sekunden bis 5 Minuten, eigene Intervalle, Hard Refresh, das schwebende Overlay mit Countdown, Fortschritt und Pause, automatische Pause beim Tippen, CAPTCHA-Erkennung, maximale Anzahl an Neuladungen, Scroll-Wiederherstellung, Einstellungen pro Website, das Symbol in der Symbolleiste und alle sechs Oberflächensprachen. Eine Website läuft gleichzeitig, und pro Zyklus wird ein passender Tab neu geladen.","premium":"Premium (optionale Lizenz): mehrere Websites und jeder passende Tab gleichzeitig, zufällige Intervallbereiche, Keyword- und Regex-Warnungen, Erkennung beliebiger Änderungen, Benachrichtigungstöne und die Wahl, nach einer Warnung weiterzulaufen. Ein Lizenzschlüssel lässt sich in zwei Browsern aktivieren; wird die Lizenz in einem Browser entfernt, wird der Platz wieder frei.","note":"Die Lizenz ist optional. RefreshMate funktioniert auch offline und fragt den Lizenzserver etwa alle zwei Stunden nach einer Prüfung; schlägt die Prüfung fehl, wird nichts gesperrt."},"thankTitle":"💌 Ein paar Worte an Sie","thank":["Vielen Dank, dass Sie RefreshMate nutzen. Dieses kleine Tool entstand, weil ich Seitenänderungen überwachen musste.","Wenn es auch Ihnen hilft, ist das die beste Belohnung.","Wenn Sie mir gerne einen \u003cspan class=\"heart\"\u003e☕\u003c/span\u003e Kaffee ausgeben möchten, würde mich das sehr freuen."],"disclaimer":"Ko-fi-Sponsoring ist rein freiwillig und beeinträchtigt keine Funktionen. Das Sponsoring hat keinen Einfluss auf die Erweiterungsfunktionen — es ist ausschließlich eine freiwillige Unterstützung durch die Nutzer.","ctaHint":"Klicken Sie auf die Schaltfläche unten, um zur Ko-fi-Support-Seite zu gelangen","btnText":"Buy Me a Coffee","ui":{"navFeatures":"Funktionen","navPlans":"Free & Premium","navPrivacy":"Datenschutz","navSupport":"Support","eyebrow":"Chrome- und Edge-Erweiterung","badgeFree":"Free + Premium","badgeLocal":"Läuft lokal","badgeNoTrack":"Kein Tracking","badgeBrowsers":"Chrome & Edge","ctaGet":"Erweiterung holen","ctaPrivacy":"Datenschutzerklärung","ctaSource":"Quellcode ansehen","featuresTitle":"Alle Funktionen","featuresLead":"Die wichtigsten Funktionen im Überblick.","moreTitle":"Außerdem","proLabel":"Premium","freeLabel":"Free","premiumLabel":"Premium","planTitle":"Free vs. Premium","planLead":"Die kostenlose Version ist ein vollständiges Werkzeug, keine Testversion. Premium ist optional.","privacyTitle":"Privat by Design","privacyLead":"Deine Daten bleiben auf deinem Gerät. Kein Konto, keine Analyse, kein Tracking. Lies genau, was gespeichert wird und wann die Erweiterung das Netz nutzt.","privacyPoints":["Lokale Verarbeitung","Kein Konto","Lizenz optional"],"privacyCta":"Datenschutzerklärung lesen","supportEyebrow":"Unterstütze die Entwicklung","supportHint":"Wenn dir die Erweiterung hilft, spendier mir einen Kaffee.","footerMore":"Weitere Erweiterungen","footerPrivacy":"Datenschutz","footerGithub":"GitHub","footerSite":"Website"}},"es":{"tagline":"Actualiza páginas automáticamente · Monitoreo de palabras clave · Intervalos aleatorios · Totalmente local","intro":"RefreshMate es una extensión de actualización automática para Chrome y Edge que recarga una página con el intervalo que elijas, desde unos segundos hasta varias horas. Define un intervalo, actívalo y deja que la página se mantenga al día mientras trabajas en otra cosa. Una pequeña capa superpuesta muestra la cuenta atrás, el progreso y un botón de pausa, y la insignia de la barra de herramientas mantiene el temporizador visible cuando la capa está oculta. Sin cuenta, sin anuncios y sin rastreo. Hecha para paneles, colas, listados y cualquier página que solo se actualiza al recargarla.","why":["Preajustes de 5 segundos, 30 segundos, 1 minuto y 5 minutos, además de un intervalo personalizado en minutos y segundos.","La recarga forzada evita la caché cuando una página se empeña en servir una copia antigua.","Una capa flotante muestra la cuenta atrás, el progreso y un control de pausa o reanudación.","La insignia de la barra de herramientas muestra el tiempo hasta la próxima recarga.","Pausa automática mientras escribes en un campo, para que los formularios no se borren a medio rellenar.","La detección de CAPTCHA detiene la recarga y te dice por qué; reanuda cuando quieras.","Un número máximo de recargas termina el bucle tras la cantidad que indiques; déjalo vacío para ilimitado.","La posición de desplazamiento se restaura después de cada recarga.","Ajustes por sitio: cada dominio conserva su intervalo, su elección de recarga forzada y sus límites.","Seis idiomas de interfaz."],"plan":{"free":"Gratis, para siempre: preajustes de 5 segundos a 5 minutos, intervalos personalizados, recarga forzada, la capa flotante con cuenta atrás, progreso y pausa, pausa automática al escribir, detección de CAPTCHA, número máximo de recargas, restauración del desplazamiento, ajustes por sitio, la insignia de la barra de herramientas y los seis idiomas de interfaz. Un sitio funciona a la vez y se recarga una pestaña coincidente por ciclo.","premium":"Premium (licencia opcional): varios sitios y todas las pestañas coincidentes a la vez, rangos de intervalo aleatorios, alertas por palabra clave y expresión regular, detección de cualquier cambio, sonidos de notificación y la opción de continuar tras una alerta. Una clave de licencia se activa en dos navegadores, y quitar la licencia de uno libera esa plaza.","note":"La licencia es opcional. RefreshMate sigue funcionando sin conexión y consulta al servidor de licencias aproximadamente cada dos horas; si la comprobación falla, no se bloquea nada."},"thankTitle":"💌 Unas palabras para ti","thank":["Gracias por usar RefreshMate. Esta pequeña herramienta nació porque necesitaba monitorear cambios en páginas.","Si también te ayuda, esa ya es la mejor recompensa.","Si quieres invitarme a un \u003cspan class=\"heart\"\u003e☕\u003c/span\u003e café, me haría muy feliz."],"disclaimer":"El patrocinio en Ko-fi es puramente voluntario y no afecta ninguna funcionalidad. El patrocinio no tiene vinculación con las funciones de la extensión — es únicamente apoyo iniciado por el usuario.","ctaHint":"Haz clic en el botón de abajo para visitar la página de soporte de Ko-fi","btnText":"Buy Me a Coffee","ui":{"navFeatures":"Funciones","navPlans":"Gratis y Premium","navPrivacy":"Privacidad","navSupport":"Apoyo","eyebrow":"Extensión para Chrome y Edge","badgeFree":"Gratis + Premium","badgeLocal":"Se ejecuta en local","badgeNoTrack":"Sin rastreo","badgeBrowsers":"Chrome y Edge","ctaGet":"Obtener la extensión","ctaPrivacy":"Política de privacidad","ctaSource":"Ver el código","featuresTitle":"Todo lo que hace","featuresLead":"Las funciones principales de un vistazo.","moreTitle":"También incluye","proLabel":"Premium","freeLabel":"Gratis","premiumLabel":"Premium","planTitle":"Gratis vs Premium","planLead":"La versión gratuita es una herramienta completa, no una prueba. Premium es opcional.","privacyTitle":"Privacidad por diseño","privacyLead":"Tus datos se quedan en tu dispositivo. Sin cuenta, sin analíticas y sin rastreo. Consulta qué se guarda y cuándo usa la red la extensión.","privacyPoints":["Procesamiento local","Sin cuenta","Licencia opcional"],"privacyCta":"Leer la política de privacidad","supportEyebrow":"Apoya al desarrollador","supportHint":"Si la extensión te resulta útil, invítame a un café.","footerMore":"Más extensiones","footerPrivacy":"Privacidad","footerGithub":"GitHub","footerSite":"Sitio web"}},"fr":{"tagline":"Actualisation automatique · Surveillance de mots-clés · Intervalles aléatoires · Entièrement local","intro":"RefreshMate est une extension d'actualisation automatique pour Chrome et Edge qui recharge une page selon l'intervalle choisi, de quelques secondes à plusieurs heures. Définissez un intervalle, lancez-le, et la page reste à jour pendant que vous travaillez ailleurs. Une petite surcouche affiche le compte à rebours, la progression et un bouton de pause, et le badge de la barre d'outils garde le minuteur visible quand la surcouche est masquée. Sans compte, sans publicité et sans traçage. Conçue pour les tableaux de bord, les files d'attente, les annonces et toute page qui ne se met à jour qu'au rechargement.","why":["Préréglages de 5 secondes, 30 secondes, 1 minute et 5 minutes, plus un intervalle personnalisé en minutes et secondes.","Le rafraîchissement forcé contourne le cache quand une page s'entête à servir une ancienne copie.","Une surcouche flottante affiche le compte à rebours, la progression et une commande de pause ou de reprise.","Le badge de la barre d'outils indique le temps avant le prochain rafraîchissement.","Pause automatique pendant la saisie dans un champ, pour que les formulaires ne soient pas effacés en cours de remplissage.","La détection de CAPTCHA arrête le rafraîchissement et en donne la raison ; reprenez quand vous êtes prêt.","Un nombre maximal de rafraîchissements arrête la boucle après la valeur choisie ; laissez vide pour un fonctionnement illimité.","La position de défilement est restaurée après chaque rechargement.","Réglages par site : chaque domaine conserve son intervalle, son choix de rafraîchissement forcé et ses limites.","Six langues d'interface."],"plan":{"free":"Gratuit, à vie : préréglages de 5 secondes à 5 minutes, intervalles personnalisés, rafraîchissement forcé, la surcouche flottante avec compte à rebours, progression et pause, pause automatique pendant la saisie, détection de CAPTCHA, nombre maximal de rafraîchissements, restauration du défilement, réglages par site, le badge de la barre d'outils et les six langues d'interface. Un seul site fonctionne à la fois, et un onglet correspondant est rechargé par cycle.","premium":"Premium (licence facultative) : plusieurs sites et tous les onglets correspondants à la fois, plages d'intervalles aléatoires, alertes par mot-clé et expression régulière, détection de tout changement, sons de notification et le choix de continuer après une alerte. Une clé de licence s'active sur deux navigateurs ; la retirer de l'un libère cette place.","note":"La licence est facultative. RefreshMate continue de fonctionner hors ligne et interroge le serveur de licences environ toutes les deux heures ; en cas d'échec, rien n'est verrouillé."},"thankTitle":"💌 Un petit mot pour vous","thank":["Merci d'utiliser RefreshMate. Cet outil est né parce que je devais surveiller les changements de pages.","S'il vous aide aussi, c'est déjà la plus belle récompense.","Si vous souhaitez m'offrir un \u003cspan class=\"heart\"\u003e☕\u003c/span\u003e café, cela me ferait très plaisir."],"disclaimer":"Le parrainage sur Ko-fi est purement volontaire et n'affecte aucune fonctionnalité. Le parrainage n'est lié à aucune fonctionnalité de l'extension — il s'agit uniquement d'un soutien initié par l'utilisateur.","ctaHint":"Cliquez sur le bouton ci-dessous pour accéder à la page de soutien Ko-fi","btnText":"Buy Me a Coffee","ui":{"navFeatures":"Fonctionnalités","navPlans":"Gratuit et Premium","navPrivacy":"Confidentialité","navSupport":"Soutien","eyebrow":"Extension Chrome et Edge","badgeFree":"Gratuit + Premium","badgeLocal":"Fonctionne en local","badgeNoTrack":"Aucun suivi","badgeBrowsers":"Chrome et Edge","ctaGet":"Obtenir l’extension","ctaPrivacy":"Politique de confidentialité","ctaSource":"Voir le code","featuresTitle":"Toutes les fonctionnalités","featuresLead":"Les fonctions essentielles en un coup d'œil.","moreTitle":"Également inclus","proLabel":"Premium","freeLabel":"Gratuit","premiumLabel":"Premium","planTitle":"Gratuit vs Premium","planLead":"La version gratuite est un outil complet, pas une version d'essai. Premium est facultatif.","privacyTitle":"Confidentiel par conception","privacyLead":"Vos données restent sur votre appareil. Sans compte, sans analyse, sans suivi. Découvrez ce qui est stocké et quand l'extension utilise le réseau.","privacyPoints":["Traitement local","Sans compte","Licence facultative"],"privacyCta":"Lire la politique de confidentialité","supportEyebrow":"Soutenir le développeur","supportHint":"Si l'extension vous aide, offrez-moi un café.","footerMore":"Plus d'extensions","footerPrivacy":"Confidentialité","footerGithub":"GitHub","footerSite":"Site web"}}}};
+const LANG_KEY = "vkt-refreshmate-lang";
+(function () {
+  "use strict";
+
+  var select = document.getElementById("i-lang");
+
+  function esc(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value == null ? "" : value;
+  }
+
+  function detect() {
+    var codes = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+    for (var i = 0; i < codes.length; i++) {
+      var code = String(codes[i] || "").toLowerCase();
+      if (code.indexOf("zh") === 0) return "zh";
+      if (code.indexOf("ja") === 0) return "ja";
+      if (code.indexOf("de") === 0) return "de";
+      if (code.indexOf("es") === 0) return "es";
+      if (code.indexOf("fr") === 0) return "fr";
+      if (code.indexOf("en") === 0) return "en";
+    }
+    return "en";
+  }
+
+  function stripLead(value) {
+    var text = String(value == null ? "" : value);
+    var match = text.match(/^([^:：]{1,70})[:：]\s*/);
+    if (match && /(free|gratis|kostenlos|gratuit|無料|免费|免費|premium|pro\b|payant|kostenpflichtig|プレミアム|有料|高级|高級|付费|付費|licen|lizenz|licencia|licence|授权|授權|ライセンス)/i.test(match[1])) {
+      return text.slice(match[0].length);
+    }
+    return text;
+  }
+
+  function sentence(value) {
+    var text = String(value == null ? "" : value);
+    return /^[a-z]/.test(text) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+  }
+
+  function cleanNote(value) {
+    var text = String(value == null ? "" : value).trim();
+    if (/^(HOW IT WORKS|SO FUNKTIONIERT ES|CÓMO FUNCIONA|COMMENT ÇA MARCHE|使用方法|使い方)$/i.test(text)) return "";
+    return text;
+  }
+
+  var iconCheck = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var iconLocal = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg>';
+  var iconEye = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 9 4.5 9 7a11.7 11.7 0 0 1-2.3 3.6"/><path d="M6.2 6.2C4.2 7.7 3 9.7 3 12c0 2.5 4 7 9 7a11 11 0 0 0 4.2-.8"/></svg>';
+  var iconGlobe = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>';
+  var iconCoffee = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M7 4v2M11 4v2"/></svg>';
+
+  function render(lang) {
+    var data = MODEL.langs[lang];
+    if (!data) return;
+    var u = data.ui;
+
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+
+    var parts = String(data.tagline || "").split("·").map(function (part) { return part.trim(); }).filter(Boolean);
+    var headline = parts.length ? parts.shift() : MODEL.name;
+
+    document.title = MODEL.name + " — " + headline;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", data.intro.slice(0, 158));
+
+    setText("i-nav-features", u.navFeatures);
+    setText("i-nav-plans", u.navPlans);
+    setText("i-nav-privacy", u.navPrivacy);
+    setText("i-nav-support", u.navSupport);
+    setText("i-eyebrow", u.eyebrow);
+    setText("i-h1", headline);
+    setText("i-intro", data.intro);
+    setText("i-get-label", u.ctaGet);
+    setText("i-privacy-label", u.ctaPrivacy);
+    setText("i-source-label", u.ctaSource);
+    setText("i-micro", u.badgeFree + " · " + u.badgeBrowsers);
+
+    var tagline = document.getElementById("i-tagline");
+    if (tagline) {
+      tagline.innerHTML = parts.map(function (part) { return "<span>" + esc(part) + "</span>"; }).join("");
+    }
+
+    var badges = document.getElementById("i-badges");
+    if (badges) {
+      badges.innerHTML = [
+        [iconLocal, u.badgeLocal],
+        [iconEye, u.badgeNoTrack],
+        [iconGlobe, u.badgeBrowsers]
+      ].map(function (item) {
+        return '<span class="badge">' + item[0] + esc(item[1]) + "</span>";
+      }).join("");
+    }
+
+    setText("i-app-name", MODEL.name);
+    setText("i-app-sub", u.badgeFree);
+    setText("i-app-browsers", u.badgeBrowsers);
+    var appPoints = document.getElementById("i-app-points");
+    if (appPoints) {
+      appPoints.innerHTML = u.privacyPoints.map(function (point) {
+        return "<div>" + iconCheck + "<span>" + esc(point) + "</span></div>";
+      }).join("");
+    }
+
+    setText("i-feat-title", u.featuresTitle);
+    setText("i-feat-lead", u.featuresLead);
+    setText("i-more-title", u.moreTitle);
+
+    var primary = data.why.slice(0, 6);
+    var extra = data.why.slice(6);
+    var featureGrid = document.getElementById("i-features");
+    if (featureGrid) {
+      featureGrid.innerHTML = primary.map(function (text, index) {
+        return '<article class="feature"><span class="num">' + String(index + 1).padStart(2, "0") + "</span><p>" + esc(text) + "</p></article>";
+      }).join("");
+    }
+
+    var morePanel = document.getElementById("i-more-panel");
+    var moreList = document.getElementById("i-more");
+    if (morePanel && moreList) {
+      if (extra.length) {
+        morePanel.hidden = false;
+        moreList.innerHTML = extra.map(function (text) { return "<li>" + esc(text) + "</li>"; }).join("");
+      } else {
+        morePanel.hidden = true;
       }
-    };
-
-    // ============================================================
-    //  Language detection
-    // ============================================================
-    function detectLang() {
-      const raw = (navigator.language || 'en').toLowerCase();
-      const map = { 'zh-tw': 'zh', 'zh-hans': 'zh', 'zh-hant': 'zh', 'zh-cn': 'zh' };
-      const mapped = map[raw] || raw;
-      const base = mapped.split('-')[0];
-      return I18N[mapped] ? mapped : (I18N[base] ? base : 'en');
     }
 
-    // ============================================================
-    //  Apply translations to DOM
-    // ============================================================
-    function applyLang(lang) {
-      const t = I18N[lang];
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.textContent = t[key];
-      });
-
-      document.getElementById('featureList').innerHTML = t.features.map(f => `<li>${f}</li>`).join('');
-      document.getElementById('thankText').innerHTML = t.thank.map(p => `<p>${p}</p>`).join('');
-      document.documentElement.lang = lang;
+    setText("i-plan-title", u.planTitle);
+    setText("i-plan-lead", u.planLead);
+    var plans = document.getElementById("i-plans");
+    if (plans) {
+      plans.innerHTML =
+        '<article class="plan"><div class="plan-top"><span class="plan-mark free">' + iconCheck + "</span><h3>" + esc(u.freeLabel) + "</h3></div><p>" + esc(sentence(stripLead(data.plan.free))) + "</p></article>" +
+        '<article class="plan premium"><div class="plan-top"><span class="plan-mark premium">' + iconCheck + "</span><h3>" + esc(u.premiumLabel) + "</h3></div><p>" + esc(sentence(stripLead(data.plan.premium))) + "</p></article>";
     }
 
-    // ============================================================
-    //  Init
-    // ============================================================
-    applyLang(detectLang());
-  </script>
+    var note = cleanNote(data.plan.note);
+    var planNote = document.getElementById("i-plan-note");
+    if (planNote) {
+      planNote.hidden = !note;
+      planNote.textContent = note;
+    }
+
+    setText("i-priv-title", u.privacyTitle);
+    setText("i-priv-lead", u.privacyLead);
+    setText("i-priv-cta", u.privacyCta);
+    var points = document.getElementById("i-priv-points");
+    if (points) {
+      points.innerHTML = u.privacyPoints.map(function (point) {
+        return '<span class="point">' + iconCheck + esc(point) + "</span>";
+      }).join("");
+    }
+
+    setText("i-support-eyebrow", u.supportEyebrow);
+    setText("i-support-title", data.thankTitle);
+    var copy = document.getElementById("i-support-copy");
+    if (copy) {
+      copy.innerHTML = data.thank.map(function (paragraph) { return "<p>" + paragraph + "</p>"; }).join("");
+    }
+    var hint = document.getElementById("i-support-hint");
+    if (hint) {
+      hint.hidden = !data.ctaHint;
+      hint.textContent = data.ctaHint || "";
+    }
+    setText("i-support-btn-label", data.btnText || "Buy Me a Coffee");
+    var disclaimer = document.getElementById("i-support-disclaimer");
+    if (disclaimer) {
+      disclaimer.hidden = !data.disclaimer;
+      disclaimer.textContent = data.disclaimer || "";
+    }
+
+    setText("i-footer-more", u.footerMore);
+    setText("i-footer-privacy", u.footerPrivacy);
+    setText("i-footer-github", u.footerGithub);
+    setText("i-footer-site", u.footerSite);
+    setText("i-footer-copy", "© 2026 " + MODEL.name);
+  }
+
+  function storedLang() {
+    try { return localStorage.getItem(LANG_KEY); } catch (error) { return null; }
+  }
+
+  function remember(lang) {
+    try { localStorage.setItem(LANG_KEY, lang); } catch (error) { /* storage can be blocked */ }
+  }
+
+  if (select) {
+    var saved = storedLang();
+    var initial = saved && MODEL.langs[saved] ? saved : detect();
+    if (!MODEL.langs[initial]) initial = "en";
+    select.value = initial;
+    if (initial !== "en") render(initial);
+    select.addEventListener("change", function () {
+      remember(select.value);
+      render(select.value);
+    });
+  }
+})();
+
+</script>
 </body>
 </html>
