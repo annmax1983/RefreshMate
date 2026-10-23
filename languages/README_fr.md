@@ -63,18 +63,12 @@ La version gratuite ne rafraîchit qu'**un seul onglet à la fois** dans l'ensem
 
 ## Installation
 
-1. Clonez ou téléchargez ce dépôt
-2. Ouvrez `chrome://extensions/` (ou `edge://extensions/`)
-3. Activez le **mode Développeur**
-4. Cliquez sur **Charger le package décompressé** → sélectionnez le dossier `RefreshMate`
-5. Cliquez sur l'icône 🔄 RefreshMate pour commencer
+| Store | Lien |
+|---|---|
+| Chrome Web Store | [Installer dans Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
+| Microsoft Edge Add-ons | [Installer dans Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
 
-### Build
-
-```bash
-npm install
-npm run build
-```
+> Installez uniquement depuis les boutiques officielles ci-dessus — évitez les sites de téléchargement tiers.
 
 ---
 

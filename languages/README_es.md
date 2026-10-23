@@ -63,18 +63,12 @@ La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegad
 
 ## Instalación
 
-1. Clona o descarga este repositorio
-2. Abre `chrome://extensions/` (o `edge://extensions/`)
-3. Activa el **modo de desarrollador**
-4. Haz clic en **Cargar descomprimida** → selecciona la carpeta `RefreshMate`
-5. Haz clic en el icono 🔄 de RefreshMate para empezar
+| Tienda | Enlace |
+|---|---|
+| Chrome Web Store | [Instalar en Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
+| Complementos de Microsoft Edge | [Instalar en Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
 
-### Compilación
-
-```bash
-npm install
-npm run build
-```
+> Instale solo desde las tiendas oficiales de arriba; evite sitios de descarga de terceros.
 
 ---
 

@@ -63,18 +63,12 @@
 
 ## インストール
 
-1. このリポジトリをクローンまたはダウンロードします
-2. `chrome://extensions/`（または`edge://extensions/`）を開きます
-3. **デベロッパーモード**を有効にします
-4. **パッケージ化されていない拡張機能を読み込む**をクリックし、`RefreshMate`フォルダを選択します
-5. 🔄 RefreshMateアイコンをクリックして開始します
+| ストア | リンク |
+|---|---|
+| Chrome ウェブストア | [Chrome に追加](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
+| Microsoft Edge アドオン | [Edge に追加](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
 
-### ビルド
-
-```bash
-npm install
-npm run build
-```
+> 上記の公式ストアからのみインストールしてください。第三者サイトの利用は避けてください。
 
 ---
 

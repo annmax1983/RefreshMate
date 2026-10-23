@@ -66,12 +66,11 @@ The free version refreshes **only one tab at a time** across the whole browser. 
 ## Installation
 
 | Store | Link |
-|-------|------|
+|---|---|
 | Chrome Web Store | [Install for Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Microsoft Edge Add-ons | [Install for Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
 
-This repository hosts the project documentation only — the extension source code and
-offline installation packages are not distributed here.
+> Install only from the official stores above — avoid third-party download sites.
 
 ---
 

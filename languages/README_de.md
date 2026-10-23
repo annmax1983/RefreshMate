@@ -63,18 +63,12 @@ Die kostenlose Version aktualisiert **nur einen Tab gleichzeitig** im gesamten B
 
 ## Installation
 
-1. Repository klonen oder herunterladen
-2. Öffne `chrome://extensions/` (oder `edge://extensions/`)
-3. Aktiviere den **Entwicklermodus**
-4. Klicke auf **Entpackte Erweiterung laden** → wähle den Ordner `RefreshMate`
-5. Klicke auf das 🔄 RefreshMate-Symbol zum Starten
+| Store | Link |
+|---|---|
+| Chrome Web Store | [In Chrome installieren](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
+| Microsoft Edge Add-ons | [In Edge installieren](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
 
-### Build
-
-```bash
-npm install
-npm run build
-```
+> Installieren Sie nur über die offiziellen Stores oben – meiden Sie Download-Seiten Dritter.
 
 ---
 
