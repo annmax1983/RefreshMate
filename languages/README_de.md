@@ -2,21 +2,21 @@
 
 [English](../README.md) | [中文](README_zh.md) | [日本語](README_ja.md) | Deutsch | [Español](README_es.md) | [Français](README_fr.md)
 
-Eine schlanke Browser-Erweiterung für anpassbares automatisches Seiten-Neuladen mit zufälligen Intervallen und Keyword-Änderungsalarmen.
+Eine schlanke Browser-Erweiterung für anpassbares automatisches Seiten-Neuladen. Zufällige Intervalle und Keyword-Änderungsalarme sind Pro-Funktionen.
 
-> Chromium-basiert · Manifest V3 · Minimale Berechtigungen · Nur lokal
+> Chrome / Edge / Firefox · Manifest V3 · Minimale Berechtigungen · Nur lokal
 
 ---
 
 ## Warum RefreshMate?
 
-Du möchtest eine Seite auf Änderungen überwachen? RefreshMate lädt Seiten nach deinem Zeitplan neu und alarmiert dich, wenn Keywords erscheinen oder verschwinden — ideal für Aktienüberwachung, Ticketverkauf oder jede zeitkritische Seite.
+Du möchtest eine Seite auf Änderungen überwachen? RefreshMate lädt Seiten nach deinem Zeitplan neu. Pro alarmiert dich zusätzlich, wenn Keywords erscheinen oder verschwinden — ideal für Aktienüberwachung, Ticketverkauf oder jede zeitkritische Seite.
 
 | Vorteil | Details |
 |---------|---------|
 | ⏱️ **Eigene Intervalle** | Schnelle Voreinstellungen (5s/30s/1min/5min) + benutzerdefinierte Eingabe |
-| 🎲 **Zufälliges Intervall** | Anti-Erkennung durch Zufallsbereich, um Seitenblockaden zu vermeiden |
-| 🔔 **Keyword-Alarme** | Browser-Benachrichtigungen bei Erscheinen/Verschwinden von Keywords |
+| 🎲 **Zufälliges Intervall (Pro)** | Anti-Erkennung durch Zufallsbereich, um Seitenblockaden zu vermeiden |
+| 🔔 **Keyword-Alarme (Pro)** | Browser-Benachrichtigungen bei Erscheinen/Verschwinden von Keywords |
 | 🔒 **CAPTCHA-Erkennung** | Stoppt das Neuladen automatisch bei erkanntem CAPTCHA |
 | 💾 **Einstellungen pro Seite** | Jede Domain speichert ihre eigene Konfiguration unabhängig |
 
@@ -27,9 +27,9 @@ Du möchtest eine Seite auf Änderungen überwachen? RefreshMate lädt Seiten na
 | Funktion | Beschreibung |
 |----------|--------------|
 | ⏱️ **Auto-Neuladen** | Intervalle von 5 Sekunden bis Stunden einstellen |
-| 🎲 **Zufallsbereich** | Min/Max-Bereich setzen, Intervall wird jeden Zyklus randomisiert |
+| 🎲 **Zufallsbereich (Pro)** | Min/Max-Bereich setzen, Intervall wird jeden Zyklus randomisiert |
 | 🧹 **Hard Refresh** | Cache umgehen mit Strg+Umschalt+R-artigem Reload |
-| 🔔 **Keyword-Überwachung** | Alarm bei Text auf der Seite, der erscheint oder verschwindet |
+| 🔔 **Keyword-Überwachung (Pro)** | Alarm bei Text auf der Seite, der erscheint oder verschwindet |
 | ⚠️ **CAPTCHA-Stopp** | Erkennt gängige CAPTCHA-Muster, stoppt automatisch |
 | 🖼️ **Schwebendes Overlay** | Mini-Countdown-Timer auf der Seite |
 | ⌨️ **Auto-Pause** | Pausiert bei Eingabe in Eingabefeldern |
@@ -45,7 +45,6 @@ Du möchtest eine Seite auf Änderungen überwachen? RefreshMate lädt Seiten na
 | 🎲 **Zufälliger Intervallbereich** | — | ✅ |
 | 🔔 **Keyword / Regex Alarme** | — | ✅ |
 | 🔄 **Erkennung jeder Seitenänderung** | — | ✅ |
-| 🆘 **Priority Support** | — | ✅ |
 
 Die kostenlose Version aktualisiert **nur einen Tab gleichzeitig** im gesamten Browser. Upgrade auf Pro, um mehrere Tabs gleichzeitig zu aktualisieren.
 
@@ -57,7 +56,10 @@ Die kostenlose Version aktualisiert **nur einen Tab gleichzeitig** im gesamten B
 |---------|--------|
 | Google Chrome | ✅ Vollständig unterstützt |
 | Microsoft Edge | ✅ Vollständig unterstützt |
+| Mozilla Firefox | ✅ Vollständig unterstützt |
 | Andere Chromium-basierte | ✅ Sollte funktionieren |
+
+> **Firefox-Hinweis:** Firefox kennt kein Offscreen-Dokument (offscreen API), daher der Hinweiston direkt aus dem Hintergrundskript abgespielt wird; die Berechtigung `offscreen` wird in der Firefox-Version nicht angefordert. Die übrigen Funktionen verhalten sich wie unter Chrome / Edge.
 
 ---
 
@@ -67,6 +69,7 @@ Die kostenlose Version aktualisiert **nur einen Tab gleichzeitig** im gesamten B
 |---|---|
 | Chrome Web Store | [In Chrome installieren](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Microsoft Edge Add-ons | [In Edge installieren](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
+| Firefox-Add-ons (AMO) | 🔜 In Prüfung – Link folgt nach der Freigabe |
 
 > Installieren Sie nur über die offiziellen Stores oben – meiden Sie Download-Seiten Dritter.
 
