@@ -33,7 +33,7 @@ Need to monitor a page for changes? RefreshMate auto-refreshes pages on your sch
 | 🧹 **Hard Refresh** | Bypass cache with Ctrl+Shift+R style reload |
 | 🔔 **Keyword Monitor (Pro)** | Alert when text appears or disappears on page |
 | ⚠️ **CAPTCHA Stop** | Detects common CAPTCHA patterns, stops automatically |
-| 🖼️ **Floating Overlay** | Mini countdown timer on the page |
+| 🖼️ **Floating Overlay** | Mini countdown timer on the page — drag it anywhere, double-click to reset |
 | ⌨️ **Auto-Pause** | Pauses when typing in input fields |
 | 💾 **Domain Memory** | Per-site settings saved automatically |
 
