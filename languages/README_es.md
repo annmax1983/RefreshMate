@@ -69,7 +69,7 @@ La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegad
 |---|---|
 | Chrome Web Store | [Instalar en Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Complementos de Microsoft Edge | [Instalar en Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
-| Complementos de Firefox (AMO) | 🔜 En revisión: el enlace se añadirá al publicarse |
+| Complementos de Firefox (AMO) | [Instalar para Firefox](https://addons.mozilla.org/firefox/addon/refreshmate-auto-refresh/) |
 
 > Instale solo desde las tiendas oficiales de arriba; evite sitios de descarga de terceros.
 
@@ -91,3 +91,13 @@ La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegad
 ## Licencia
 
 Copyright © 2026 RefreshMate. Todos los derechos reservados.
+
+---
+
+## Enlaces
+
+- **Sitio oficial:** https://annmax1983.com/
+- **Esta extensión:** https://annmax1983.com/extensions/refreshmate
+- **Privacidad:** https://annmax1983.com/privacy
+- **Contacto:** support@annmax1983.com
+- **☕ Apoya el proyecto (Ko-fi):** https://ko-fi.com/annmax?ref=refreshmate

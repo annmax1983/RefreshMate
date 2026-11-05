@@ -68,7 +68,7 @@
 |---|---|
 | Chrome 应用商店 | [在 Chrome 中安装](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Microsoft Edge 加载项 | [在 Edge 中安装](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
-| Firefox 附加组件（AMO） | 🔜 审核中，上架后补充链接 |
+| Firefox 附加组件（AMO） | [安装 Firefox 版](https://addons.mozilla.org/firefox/addon/refreshmate-auto-refresh/) |
 
 > 请只通过上方官方商店安装，避免使用第三方下载站。
 
@@ -100,3 +100,13 @@ Copyright © 2026 RefreshMate. 保留所有权利。
 ---
 
 > **注：** 本仓库仅用于**项目展示**。
+
+---
+
+## 链接
+
+- **官方网站:** https://annmax1983.com/
+- **本插件:** https://annmax1983.com/extensions/refreshmate
+- **隐私政策:** https://annmax1983.com/privacy
+- **联系:** support@annmax1983.com
+- **☕ 支持这个项目（Ko-fi）:** https://ko-fi.com/annmax?ref=refreshmate

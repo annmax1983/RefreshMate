@@ -69,7 +69,7 @@ La version gratuite ne rafraîchit qu'**un seul onglet à la fois** dans l'ensem
 |---|---|
 | Chrome Web Store | [Installer dans Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Microsoft Edge Add-ons | [Installer dans Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
-| Modules complémentaires Firefox (AMO) | 🔜 En cours d’examen — le lien sera ajouté après publication |
+| Modules complémentaires Firefox (AMO) | [Installer pour Firefox](https://addons.mozilla.org/firefox/addon/refreshmate-auto-refresh/) |
 
 > Installez uniquement depuis les boutiques officielles ci-dessus — évitez les sites de téléchargement tiers.
 
@@ -95,3 +95,13 @@ Copyright © 2026 RefreshMate. Tous droits réservés.
 ---
 
 > **Note :** Ce dépôt est destiné à la **présentation du projet uniquement**.
+
+---
+
+## Liens
+
+- **Site officiel:** https://annmax1983.com/
+- **Cette extension:** https://annmax1983.com/extensions/refreshmate
+- **Confidentialité:** https://annmax1983.com/privacy
+- **Contact:** support@annmax1983.com
+- **☕ Soutenir le projet (Ko-fi):** https://ko-fi.com/annmax?ref=refreshmate

@@ -69,7 +69,7 @@ Die kostenlose Version aktualisiert **nur einen Tab gleichzeitig** im gesamten B
 |---|---|
 | Chrome Web Store | [In Chrome installieren](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Microsoft Edge Add-ons | [In Edge installieren](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
-| Firefox-Add-ons (AMO) | 🔜 In Prüfung – Link folgt nach der Freigabe |
+| Firefox-Add-ons (AMO) | [Für Firefox installieren](https://addons.mozilla.org/firefox/addon/refreshmate-auto-refresh/) |
 
 > Installieren Sie nur über die offiziellen Stores oben – meiden Sie Download-Seiten Dritter.
 
@@ -95,3 +95,13 @@ Copyright © 2026 RefreshMate. Alle Rechte vorbehalten.
 ---
 
 > **Hinweis:** Dieses Repository dient ausschließlich der **Projektpräsentation**.
+
+---
+
+## Links
+
+- **Offizielle Website:** https://annmax1983.com/
+- **Diese Erweiterung:** https://annmax1983.com/extensions/refreshmate
+- **Datenschutz:** https://annmax1983.com/privacy
+- **Kontakt:** support@annmax1983.com
+- **☕ Projekt unterstützen (Ko-fi):** https://ko-fi.com/annmax?ref=refreshmate

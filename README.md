@@ -71,7 +71,7 @@ The free version refreshes **only one tab at a time** across the whole browser. 
 |---|---|
 | Chrome Web Store | [Install for Chrome](https://chromewebstore.google.com/detail/camggpihgjdgbjnidhdalapchepdflbg) |
 | Microsoft Edge Add-ons | [Install for Edge](https://microsoftedge.microsoft.com/addons/detail/ikgfdokioakgjgcmofboemcmahhnijjg) |
-| Firefox Add-ons (AMO) | 🔜 Under review — link will be added once the listing is live |
+| Firefox Add-ons (AMO) | [Install for Firefox](https://addons.mozilla.org/firefox/addon/refreshmate-auto-refresh/) |
 
 > Install only from the official stores above — avoid third-party download sites.
 
@@ -98,3 +98,13 @@ Copyright © 2026 RefreshMate. All rights reserved.
 ---
 
 > **Note:** This repository contains **documentation only**. The extension source code is not distributed to end users — install from the store links above.
+
+---
+
+## Links
+
+- **Official website:** https://annmax1983.com/
+- **This extension:** https://annmax1983.com/extensions/refreshmate
+- **Privacy policy:** https://annmax1983.com/privacy
+- **Contact:** support@annmax1983.com
+- **☕ Support this project (Ko-fi):** https://ko-fi.com/annmax?ref=refreshmate
