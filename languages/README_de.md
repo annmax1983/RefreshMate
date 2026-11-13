@@ -41,12 +41,12 @@ Du möchtest eine Seite auf Änderungen überwachen? RefreshMate lädt Seiten na
 
 | Funktion | Kostenlos | Pro (Lizenz) |
 |----------|-----------|---------------|
-| 🗂️ **Gleichzeitige Tabs** | **1 Tab** gleichzeitig | ✅ Unbegrenzt |
+| 🗂️ **Websites & Tabs** | **1 Website, 1 Tab** gleichzeitig | ✅ Unbegrenzt |
 | 🎲 **Zufälliger Intervallbereich** | — | ✅ |
 | 🔔 **Keyword / Regex Alarme** | — | ✅ |
 | 🔄 **Erkennung jeder Seitenänderung** | — | ✅ |
 
-Die kostenlose Version aktualisiert **nur einen Tab gleichzeitig** im gesamten Browser. Upgrade auf Pro, um mehrere Tabs gleichzeitig zu aktualisieren.
+Die kostenlose Version überwacht **jeweils eine Website** und aktualisiert pro Website einen Tab. Mit Pro lassen sich viele Websites und mehrere Tabs gleichzeitig aktualisieren.
 
 ---
 

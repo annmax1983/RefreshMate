@@ -43,12 +43,12 @@ Need to monitor a page for changes? RefreshMate auto-refreshes pages on your sch
 
 | Capability | Free | Pro (License) |
 |------------|------|----------------|
-| 🗂️ **Simultaneous tabs** | **1 tab** at a time | ✅ Unlimited |
+| 🗂️ **Sites & tabs** | **1 site, 1 tab** at a time | ✅ Unlimited |
 | 🎲 **Random interval range** | — | ✅ |
 | 🔔 **Keyword / regex alerts** | — | ✅ |
 | 🔄 **Any page change detection** | — | ✅ |
 
-The free version refreshes **only one tab at a time** across the whole browser. Upgrade to Pro to refresh multiple tabs simultaneously.
+The free version monitors **one site at a time** and refreshes a single tab per site. Upgrade to Pro to refresh many sites and multiple tabs at once.
 
 ---
 

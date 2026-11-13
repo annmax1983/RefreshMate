@@ -41,12 +41,12 @@ Una extensión ligera para el navegador que permite la actualización automátic
 
 | Capacidad | Gratis | Pro (Licencia) |
 |------------|------|----------------|
-| 🗂️ **Pestañas simultáneas** | **1 pestaña** a la vez | ✅ Ilimitadas |
+| 🗂️ **Sitios y pestañas** | **1 sitio, 1 pestaña** a la vez | ✅ Ilimitados |
 | 🎲 **Rango de intervalo aleatorio** | — | ✅ |
 | 🔔 **Alertas por palabra clave / regex** | — | ✅ |
 | 🔄 **Detección de cualquier cambio en la página** | — | ✅ |
 
-La versión gratuita actualiza **solo una pestaña a la vez** en todo el navegador. Pásate a Pro para actualizar varias pestañas simultáneamente.
+La versión gratuita supervisa **un solo sitio a la vez** y actualiza una pestaña por sitio. Pásate a Pro para actualizar varios sitios y varias pestañas simultáneamente.
 
 ---
 

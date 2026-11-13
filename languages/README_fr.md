@@ -41,12 +41,12 @@ Vous devez surveiller une page pour détecter des changements ? RefreshMate rafr
 
 | Capacité | Gratuit | Pro (Licence) |
 |------------|------|----------------|
-| 🗂️ **Onglets simultanés** | **1 onglet** à la fois | ✅ Illimité |
+| 🗂️ **Sites et onglets** | **1 site, 1 onglet** à la fois | ✅ Illimité |
 | 🎲 **Plage d'intervalle aléatoire** | — | ✅ |
 | 🔔 **Alertes par mot-clé / regex** | — | ✅ |
 | 🔄 **Détection de tout changement de page** | — | ✅ |
 
-La version gratuite ne rafraîchit qu'**un seul onglet à la fois** dans l'ensemble du navigateur. Passez à Pro pour rafraîchir plusieurs onglets simultanément.
+La version gratuite surveille **un seul site à la fois** et rafraîchit un onglet par site. Passez à Pro pour rafraîchir plusieurs sites et plusieurs onglets simultanément.
 
 ---
 
